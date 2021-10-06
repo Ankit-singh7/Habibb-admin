@@ -1,0 +1,109 @@
+
+
+
+      <div class="container-fluid">
+        <div class="row dash-tab">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <button class="shortcut-btn d-block w-100" data-toggle="modal" data-target="#addWaiter"><b>+ Add
+                  Service Type</b></button>
+            </div>
+          </div>
+  
+  
+          <div class="col-sm-12">
+            <div class="table-responsive">
+              <table class="table details_table">
+                <thead>
+                  <tr>
+                    <th scope="col">Service Type Name<a href='javascript:void(0)' (click)="changeOrder('name')"
+                        class="caret-sort"><i class="fa" [class.fa-caret-down]="!sortOrder"
+                          [class.fa-caret-up]="sortOrder"></i></a></th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf='ServiceTypeList?.length; else elseBlock'>
+                  <tr *ngFor='let item of ServiceTypeList; let i=index;'>
+                    <td><B>{{item.name}}</B></td>
+
+                    <td>
+                      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#addWaiter2"
+                        (click)="getServiceTypeDetail(item.service_type_id)"><i class="fa fa-pencil"></i></button>
+                      <button type="button" style="margin-left:4px" class="btn btn-danger btn-sm"
+                        (click)="deleteServiceType(i,item.service_type_id)"><i class="fa fa-trash-o"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+                <ng-template #elseBlock>
+                  <tbody>
+                    <tr>
+                      <td class="text-center" colspan="100%">{{response}}</td>
+                    </tr>
+                  </tbody>
+                </ng-template>
+              </table>
+            </div>
+          </div>
+  
+  
+        </div>
+      </div>
+
+
+  <div id="addWaiter" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true" #closeAddModal>
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content" style="padding:2%">
+        <form id="subform3" role="form" #subForm3="ngForm">
+          <div class="row">
+            <div class="col-12">
+              <h5>Add a Service Type</h5>
+            </div>
+            <div class="col-sm-12">
+              <div class=" form-group position-relative">
+                <input type="text" class="form-control mb-4" placeholder="Service Type Name" name="Cname" [(ngModel)]="serviceTypeName"
+                  required />
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-12" style="text-align: center;">
+              <button type="button" class="btn btn-success" [disabled]="!subForm3.valid"
+                (click)="addServiceType()">SUBMIT</button>
+            </div>
+          </div>
+        </form>
+  
+      </div>
+    </div>
+  </div>
+  
+  <div id="addWaiter2" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true" #closeEditModal3>
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content" style="padding:2%">
+        <form id="subform4" role="form" #subForm4="ngForm" *ngIf="detail">
+          <div class="row">
+            <div class="col-12">
+              <h5>Edit Service Type Detail</h5>
+            </div>
+            <div class="col-sm-12">
+              <div class=" form-group position-relative">
+                <input type="text" class="form-control mb-4" placeholder="Service Type Name" name="fname1"
+                  [(ngModel)]="detail.name" required />
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-12" style="text-align: center;">
+              <button type="button" class="btn btn-success" [disabled]="!subForm4.valid"
+                (click)="editServiceType(detail.service_type_id)">EDIT</button>
+            </div>
+          </div>
+        </form>
+  
+      </div>
+    </div>
+  </div>

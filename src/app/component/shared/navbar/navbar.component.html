@@ -1,0 +1,44 @@
+<!-- Sidebar  -->
+<nav id="sidebar">
+  <div class="sidebar-header"> <h2 style="text-align: center;"><B> HA<span style="color:red">B</span>IBB</B></h2>
+  </div>
+  <ul class="list-unstyled">
+    <li routerLinkActive="active"> <a routerLink="/user/employee"><i class="fas fa-user"></i> &nbsp; Employee List</a></li>
+    <li routerLinkActive="active"> <a routerLink="/user/operator"><i class="fas fa-user"></i> &nbsp; Operator List</a></li>
+    <li routerLinkActive="active"> <a routerLink="/user/branch"><i class="fas fa-user"></i> &nbsp; Branch List</a></li>
+    <li routerLinkActive="active"> <a href="#reportSubmenu" data-toggle="collapse" aria-expanded="false"
+        class="dropdown-toggle"><i class="fas fa-utensils"></i> &nbsp; Product Details</a>
+      <ul class="collapse list-unstyled" id="reportSubmenu">
+        <li routerLinkActive="active"> <a [routerLink]="['/user/brand']">Brand List</a> </li>
+        <li routerLinkActive="active"> <a [routerLink]="['/user/product-list']">Product List</a> </li>
+      </ul>
+    </li>
+    <li routerLinkActive="active"> <a href="#reportSubmenu4" data-toggle="collapse" aria-expanded="false"
+      class="dropdown-toggle"><i class="fas  fa-cogs"></i> &nbsp; Service Details</a>
+    <ul class="collapse list-unstyled" id="reportSubmenu4">
+      <li routerLinkActive="active"> <a [routerLink]="['/user/service-type']">Service Type List</a> </li>
+      <li routerLinkActive="active"> <a [routerLink]="['/user/service']">Service List</a> </li>
+    </ul>
+  </li>
+    <li routerLinkActive="active"> <a href="#reportSubmenu4" data-toggle="collapse" aria-expanded="false"
+      class="dropdown-toggle"><i class="fas  fa-cogs"></i> &nbsp; Mode Details</a>
+    <ul class="collapse list-unstyled" id="reportSubmenu4">
+      <li routerLinkActive="active"> <a [routerLink]="['/user/payment']">Payment Mode List</a> </li>
+    </ul>
+  </li>
+    <li routerLinkActive="active"> <a [routerLink]="['/user/billing']"><i class="fas fa-shopping-cart"></i>&nbsp; Billing List</a> </li>
+    <li routerLinkActive="active"> <a [routerLink]="['/user/product-sales']"><i class="fas fa-shopping-cart"></i>&nbsp; Product Sales Report</a> </li>
+    <li routerLinkActive="active"> <a [routerLink]="['/user/service-sales']"><i class="fas fa-shopping-cart"></i>&nbsp; Service Sales Report</a> </li>
+    <li routerLinkActive="active"> <a [routerLink]="['/user/session']"><i class="fas fa-chart-bar"></i>&nbsp; Session List</a> </li>
+    <!-- <li routerLinkActive="active"> <a [routerLink]="['/user/stock-list']"><i class="fas fa-chart-bar"></i>&nbsp; Stock List</a> </li>
+    <li routerLinkActive="active"> <a [routerLink]="['/user/stock-in']"><i class="fas fa-shopping-cart"></i>&nbsp; Stock In List</a> </li>
+    <li routerLinkActive="active"> <a [routerLink]="['/user/stock-out']"><i class="fas fa-utensils"></i>&nbsp; Stock Out List</a> </li> -->
+    <li routerLinkActive="active"> <a href="#rankingSubmenu" data-toggle="collapse" aria-expanded="false"
+      class="dropdown-toggle"><i class="fas fa-cogs"></i> &nbsp; Settings</a>
+    <ul class="collapse list-unstyled" id="rankingSubmenu">
+      <li routerLinkActive="active"> <a [routerLink]="['/user/change-pass']">Change Password</a> </li>
+      <li routerLinkActive="active" (click)="logout()"> <a>Logout</a> </li>
+    </ul>
+  </li>
+  </ul>
+</nav>

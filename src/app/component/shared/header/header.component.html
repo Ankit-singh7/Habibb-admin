@@ -1,0 +1,13 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container-fluid d-block d-sm-none">
+      <div class="mob-head" style="color:white; text-align: center; padding-top: 18px;"> <h2 style="text-align: center;"><B> HA<span style="color:red">B</span>IBB</B></h2> </div>
+    </div>
+    <div class="container-fluid">
+      <button type="button" id="sidebarCollapse" class="btn btn-default d-block d-lg-none collapse-btn"> <i class="fas fa-align-left"></i> </button>
+      <h5 class="d-none d-lg-block text-uppercase">{{title}}</h5>
+      <h5 class="d-block d-lg-none m-auto text-center mob-heading">{{title}}</h5>
+      <h5 class="d-inline-block mr-sm-5" tabindex="0" data-html="true" data-toggle="popover" data-trigger="focus" data-title="" [attr.data-content]="name[2]" data-placement="bottom"><i class="fa fa-user-circle mr-2"></i><span class="d-none d-sm-inline">{{fullName}}</span></h5>
+      <a href="javascript:void(0)" (click)="logout()" class="position-absolute logout-btn"><img src="assets/images/logout.ico" width="25"></a> <a href="#" class="d-block d-sm-none mob-srch" style="visibility:hidden"><i class="fa fa-search"></i></a> 
+
+    </div>
+  </nav>

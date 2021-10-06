@@ -1,0 +1,424 @@
+
+  <!-- Page Content  -->
+
+  <div class="container-fluid">
+    <div class="row dash-tab">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <button class="shortcut-btn d-block w-100" data-toggle="modal" data-target="#addWaiter"><b>+ Add Branch</b></button>
+        </div>
+      </div>
+
+
+
+      <div class="col-sm-12">
+        <div class="table-responsive">
+          <table class="table details_table">
+            <thead>
+              <tr>
+                <th scope="col">Branch Name<a href='javascript:void(0)' (click)="changeOrder('branch_name')"
+                    class="caret-sort"><i class="fa" [class.fa-caret-down]="!sortOrder"
+                      [class.fa-caret-up]="sortOrder"></i></a></th>
+                <th scope="col">Phone</th>
+                <th scope="col">Address</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody *ngIf='branchList?.length; else elseBlock'>
+              <tr *ngFor='let item of branchList ; index as i;'>
+                <td><B>{{item.branch_name | titlecase}}</B></td>
+                <td>{{item.branch_phone}}</td>
+                <td>{{item.branch_address}}</td>
+                <td>
+                  <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#addWaiter2"
+                    (click)="getBranchDetail(item.branch_id)"><i class="fa fa-pencil"></i></button>
+                  <button type="button" style="margin-left:4px" class="btn btn-danger btn-sm"
+                    (click)="deleteBranch(i,item.branch_id)"><i class="fa fa-trash-o"></i></button>
+                </td>
+              </tr>
+            </tbody>
+            <ng-template #elseBlock>
+              <tbody>
+                <tr>
+                  <td class="text-center" colspan="100%">{{response}}</td>
+                </tr>
+              </tbody>
+            </ng-template>
+          </table>
+          <!-- <pagination-controls (pageChange)="getOperatorList($event)" style="text-align: center;"></pagination-controls> -->
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+
+<div id="addWaiter" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content" style="padding:2%">
+    <form id="subform" role="form" #subForm="ngForm">
+      <div class="row">
+        <div class="col-12">
+          <h5>Add a Branch</h5>
+        </div>
+        <div class="offset-md-1 col-sm-12 col-md-5">
+          <div class=" form-group position-relative">
+            <input type="text" class="form-control mb-4" placeholder="Branch Name" name="bn" [(ngModel)]="data.name"
+              required />
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-5">
+          <div class="form-group position-relative">
+            <input type="text" class="form-control mb-4" placeholder="Phone" name="em" [(ngModel)]="data.phone"
+              autocomplete="new-password" required />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="offset-md-1 col-sm-12 col-md-10">
+          <div class="form-group position-relative">
+            <input type="text" class="form-control mb-4" placeholder="Address" name="ad" [(ngModel)]="data.address"
+              required />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="offset-md-1 col-sm-10 col-md-3">
+            <div class="form-group position-relative">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">Start Hour</label>
+                </div>
+                <select class="custom-select" placeholder="" id="inputGroupSelect01"
+                  [(ngModel)]="startHour" name="startHour" (change)="changeStartHour($event.target.value)">
+                  <ng-container *ngFor="let item of hours">
+                    <option [value]="item.key">{{item.key}}</option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-10 col-md-3">
+            <div class="form-group position-relative">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">Start Min</label>
+                </div>
+                <select class="custom-select" placeholder="" id="inputGroupSelect01"
+                  [(ngModel)]="startMin" name="Startmin" (change)="changeStartMin($event.target.value)">
+                  <ng-container *ngFor="let item of minutes">
+                    <option [value]="item.key">{{item.key}}</option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-10 col-md-3">
+            <div class="form-group position-relative">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">Start Slot</label>
+                </div>
+                <select class="custom-select" placeholder="" id="inputGroupSelect01"
+                  [(ngModel)]="startSlot" name="slot233" (change)="changeStartSlot($event.target.value)">
+                  <option value="am">am</option>
+                  <option value="am">pm</option>
+                </select>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="row">
+        <div class="offset-md-1 col-sm-10 col-md-3">
+            <div class="form-group position-relative">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">End Hour</label>
+                </div>
+                <select class="custom-select" placeholder="Choose Status" id="inputGroupSelect01"
+                  [(ngModel)]="endHour" name="endHour" (change)="changeEndHour($event.target.value)">
+                  <ng-container *ngFor="let item of hours">
+                    <option [value]="item.key">{{item.key}}</option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-10 col-md-3">
+            <div class="form-group position-relative">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">End Minute</label>
+                </div>
+                <select class="custom-select" placeholder="Choose Status" id="inputGroupSelect01"
+                  [(ngModel)]="endMin" name="endMin" (change)="changeEndMin($event.target.value)">
+                  <ng-container *ngFor="let item of minutes">
+                    <option [value]="item.key">{{item.key}}</option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-10 col-md-3">
+            <div class="form-group position-relative">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">End Slot</label>
+                </div>
+                <select class="custom-select" placeholder="Choose Status" id="inputGroupSelect01"
+                  [(ngModel)]="endSlot" name="slot233" (change)="changeStartSlot($event.target.value)">
+                  <option value="am">am</option>
+                  <option value="am">pm</option>
+                </select>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="row">
+        <div class="offset-md-1 col-sm-12 col-md-10">
+          <div class="form-group position-relative">
+            <input type="text" class="form-control mb-4" placeholder="Branch GST" name="gst" [(ngModel)]="data.branch_gst"
+              required />
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="offset-md-1 col-sm-12 col-md-10">
+          <div class="form-group position-relative">
+            <textarea type="text" class="form-control mb-4" placeholder="Footer 1" name="f1" [(ngModel)]="data.footer_1"
+              required></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="offset-md-1 col-sm-12 col-md-10">
+          <div class="form-group position-relative">
+            <textarea type="text" class="form-control mb-4" placeholder="Footer 2" name="f2" [(ngModel)]="data.footer_2"
+              required></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="offset-md-1 col-sm-12 col-md-10">
+          <div class="form-group position-relative">
+            <textarea type="text" class="form-control mb-4" placeholder="Footer 3" name="f3" [(ngModel)]="data.footer_3"
+              required></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row"> 
+        <div class="offset-md-1 col-sm-12 col-md-10">
+          <div class="form-group position-relative">
+            <input type="text" class="form-control mb-4" placeholder="Google Link" name="gl" [(ngModel)]="data.google_link"
+              required />
+          </div>
+        </div>
+      </div>
+      <div class="row"> 
+        <div class="offset-md-1 col-sm-12 col-md-10">
+          <div class="form-group position-relative">
+            <input type="text" class="form-control mb-4" placeholder="Facebook Link" name="fl" [(ngModel)]="data.facebook_link"
+              required />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12" style="text-align: center;">
+          <button type="button" class="btn btn-success" [disabled]="!subForm.valid"
+            (click)="addBranch()">SUBMIT</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+</div>
+
+<div id="addWaiter2" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+aria-labelledby="myLargeModalLabel" aria-hidden="true" #closeEditModal>
+<div class="modal-dialog modal-lg">
+  <div class="modal-content" style="padding:2%">
+    <ng-container *ngIf="detail">
+
+      <form id="subform" role="form" #subForm="ngForm">
+        <div class="row">
+          <div class="col-12">
+            <h5>Edit a Branch</h5>
+          </div>
+          <div class="offset-md-1 col-sm-12 col-md-5">
+            <div class=" form-group position-relative">
+              <input type="text" class="form-control mb-4" placeholder="Branch Name" name="bn" [(ngModel)]="detail.branch_name"
+                required />
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-5">
+            <div class="form-group position-relative">
+              <input type="text" class="form-control mb-4" placeholder="Phone" name="em" [(ngModel)]="detail.branch_phone"
+                autocomplete="new-password" required />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="offset-md-1 col-sm-12 col-md-10">
+            <div class="form-group position-relative">
+              <input type="text" class="form-control mb-4" placeholder="Address" name="ad" [(ngModel)]="detail.branch_address"
+                required />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="offset-md-1 col-sm-10 col-md-3">
+              <div class="form-group position-relative">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Start Hour</label>
+                  </div>
+                  <select class="custom-select" placeholder="" id="inputGroupSelect01"
+                    [(ngModel)]="detail.startHour" name="startHour" (change)="changeStartHour($event.target.value)">
+                    <ng-container *ngFor="let item of hours">
+                      <option [value]="item.key" [selected]="item.key === detail.startHour">{{item.key}}</option>
+                    </ng-container>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-10 col-md-3">
+              <div class="form-group position-relative">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Start Min</label>
+                  </div>
+                  <select class="custom-select" placeholder="" id="inputGroupSelect01"
+                    [(ngModel)]="detail.startMin" name="Startmin" (change)="changeStartMin($event.target.value)">
+                    <ng-container *ngFor="let item of minutes">
+                      <option [value]="item.key" [selected]="item.key === detail.startMin">{{item.key}}</option>
+                    </ng-container>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-10 col-md-3">
+              <div class="form-group position-relative">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Start Slot</label>
+                  </div>
+                  <select class="custom-select" placeholder="" id="inputGroupSelect01"
+                    [(ngModel)]="detail.startSlot" name="slot233" (change)="changeStartSlot($event.target.value)">
+                    <option value="am" [selected]="detail.startSlot === 'am'">am</option>
+                    <option value="am" [selected]="detail.startSlot === 'pm'">pm</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="offset-md-1 col-sm-10 col-md-3">
+              <div class="form-group position-relative">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">End Hour</label>
+                  </div>
+                  <select class="custom-select" placeholder="Choose Status" id="inputGroupSelect01"
+                    [(ngModel)]="detail.endHour" name="endHour" (change)="changeEndHour($event.target.value)">
+                    <ng-container *ngFor="let item of hours">
+                      <option [value]="item.key" [selected]="item.key === detail.endHour">{{item.key}}</option>
+                    </ng-container>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-10 col-md-3">
+              <div class="form-group position-relative">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">End Minute</label>
+                  </div>
+                  <select class="custom-select" placeholder="Choose Status" id="inputGroupSelect01"
+                    [(ngModel)]="detail.endMin" name="endMin" (change)="changeEndMin($event.target.value)">
+                    <ng-container *ngFor="let item of minutes">
+                      <option [value]="item.key" [selected]="item.key === detail.endMin">{{item.key}}</option>
+                    </ng-container>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-10 col-md-3">
+              <div class="form-group position-relative">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">End Slot</label>
+                  </div>
+                  <select class="custom-select" placeholder="Choose Status" id="inputGroupSelect01"
+                    [(ngModel)]="detail.endSlot" name="slot233" (change)="changeStartSlot($event.target.value)">
+                    <option value="am" [selected]="detail.endSlot === 'am'">am</option>
+                    <option value="am" [selected]="detail.endSlot === 'pm'">pm</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="offset-md-1 col-sm-12 col-md-10">
+            <div class="form-group position-relative">
+              <input type="text" class="form-control mb-4" placeholder="Branch GST" name="gst" [(ngModel)]="detail.branch_gst"
+                required />
+            </div>
+          </div>
+  
+        </div>
+        <div class="row">
+          <div class="offset-md-1 col-sm-12 col-md-10">
+            <div class="form-group position-relative">
+              <textarea type="text" class="form-control mb-4" placeholder="Footer 1" name="f1" [(ngModel)]="detail.footer_1"
+                required></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="offset-md-1 col-sm-12 col-md-10">
+            <div class="form-group position-relative">
+              <textarea type="text" class="form-control mb-4" placeholder="Footer 2" name="f2" [(ngModel)]="detail.footer_2"
+                required></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="offset-md-1 col-sm-12 col-md-10">
+            <div class="form-group position-relative">
+              <textarea type="text" class="form-control mb-4" placeholder="Footer 3" name="f3" [(ngModel)]="detail.footer_3"
+                required></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row"> 
+          <div class="offset-md-1 col-sm-12 col-md-10">
+            <div class="form-group position-relative">
+              <input type="text" class="form-control mb-4" placeholder="Google Link" name="gl" [(ngModel)]="detail.google_link"
+                required />
+            </div>
+          </div>
+        </div>
+        <div class="row"> 
+          <div class="offset-md-1 col-sm-12 col-md-10">
+            <div class="form-group position-relative">
+              <input type="text" class="form-control mb-4" placeholder="Facebook Link" name="fl" [(ngModel)]="detail.facebook_link"
+                required />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12" style="text-align: center;">
+            <button type="button" class="btn btn-success" [disabled]="!subForm.valid"
+              (click)="editBranch(detail.branch_id)">SUBMIT</button>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+
+  </div>
+</div>
+</div>

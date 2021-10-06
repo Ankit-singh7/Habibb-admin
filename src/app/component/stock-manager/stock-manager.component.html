@@ -1,0 +1,210 @@
+
+  <!-- Page Content  -->
+
+  <div class="container-fluid">
+    <div class="row dash-tab">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <button class="shortcut-btn d-block w-100" data-toggle="modal" data-target="#addWaiter"><b>+ Add
+              Stock Manager</b></button>
+        </div>
+      </div>
+      <div class="offset-md-7 col-sm-12 col-md-2 ">
+        <div class="form-group">
+          SELECT PER PAGE
+          <select name="pay" class="form-control pl-0" id="pay" [(ngModel)]="selectedPerPage" (change)="onLimitSelect($event.target.value)">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+         </div>
+      </div>
+
+
+      <div class="col-sm-12">
+        <div class="table-responsive">
+          <table class="table details_table">
+            <thead>
+              <tr>
+                <th scope="col">Name<a href='javascript:void(0)' (click)="changeOrder('firstName')"
+                    class="caret-sort"><i class="fa" [class.fa-caret-down]="!sortOrder"
+                      [class.fa-caret-up]="sortOrder"></i></a></th>
+                <th scope="col">Phone</th>
+                <th scope="col">User Name</th>
+                <th scope="col">Password</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody *ngIf='employeeList?.length; else elseBlock'>
+              <tr *ngFor='let item of employeeList| paginate: { itemsPerPage: selectedPerPage, currentPage: currentpage, totalItems: total};  index as i;'>
+                <td><B>{{item.firstName | titlecase}} {{item.lastName | titlecase}}</B></td>
+                <td>{{item.mobileNumber}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.password}}</td>
+                <td>{{item.status | titlecase}}</td>
+                <td>
+                  <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#addWaiter2"
+                    (click)="getEmployeeDetail(item.stockManagerId)"><i class="fa fa-pencil"></i></button>
+                  <button type="button" style="margin-left:4px" class="btn btn-danger btn-sm"
+                    (click)="deleteEmployee(i,item.stockManagerId)"><i class="fa fa-trash-o"></i></button>
+                </td>
+              </tr>
+            </tbody>
+            <ng-template #elseBlock>
+              <tbody>
+                <tr>
+                  <td class="text-center" colspan="100%">{{response}}</td>
+                </tr>
+              </tbody>
+            </ng-template>
+          </table>
+          <pagination-controls (pageChange)="getEmployeesList($event)" style="text-align: center;"></pagination-controls>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+
+<div id="addWaiter" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content" style="padding:2%">
+    <form id="subform" role="form" #subForm="ngForm">
+      <div class="row">
+        <div class="col-12">
+          <h5>Add Stock Manager</h5>
+        </div>
+        <div class="offset-md-1 col-sm-12 col-md-5">
+          <div class=" form-group position-relative">
+            <input type="text" class="form-control mb-4" placeholder="First Name" name="fname" [(ngModel)]="firstName"
+              required />
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-5">
+          <div class="form-group position-relative">
+            <input type="text" class="form-control mb-4" placeholder="Last Name" name="lname" [(ngModel)]="lastName"
+              required />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="offset-md-1 col-sm-12 col-md-5">
+          <div class="form-group position-relative">
+            <input type="text" class="form-control mb-4" placeholder="Email" name="em" [(ngModel)]="email"
+              autocomplete="new-password" required />
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-5">
+          <div class="form-group position-relative">
+            <input type="text" class="form-control mb-4" placeholder="Password" name="pass" [(ngModel)]="password"
+              autocomplete="new-password" required />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="offset-md-1 col-sm-12 col-md-5">
+          <div class="form-group position-relative">
+            <input type="text" class="form-control mb-4" placeholder="Mobile Number" name="mob" [(ngModel)]="phone"
+              required />
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-5">
+          <div class="form-group position-relative">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Status</label>
+              </div>
+              <select class="custom-select" placeholder="Choose Status" id="inputGroupSelect01" [(ngModel)]="status"
+                name="stat" (change)="addStatus($event.target.value)">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12" style="text-align: center;">
+          <button type="button" class="btn btn-success" [disabled]="!subForm.valid"
+            (click)="addEmployee()">SUBMIT</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+</div>
+
+<div id="addWaiter2" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+aria-labelledby="myLargeModalLabel" aria-hidden="true" #closeEditModal>
+<div class="modal-dialog modal-lg">
+  <div class="modal-content" style="padding:2%">
+    <form id="subform2" role="form" #subForm2="ngForm" *ngIf="detail">
+      <div class="row">
+        <div class="col-12">
+          <h5>Edit Stock Manager Detail</h5>
+        </div>
+        <div class="offset-md-1 col-sm-12 col-md-5">
+          <div class=" form-group position-relative">
+            <input type="text" class="form-control mb-4" placeholder="First Name" name="fname1"
+              [(ngModel)]="detail.firstName" required />
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-5">
+          <div class="form-group position-relative">
+            <input type="text" class="form-control mb-4" placeholder="Last Name" name="lname1"
+              [(ngModel)]="detail.lastName" required />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="offset-md-1 col-sm-12 col-md-5">
+          <div class="form-group position-relative">
+            <input type="text" class="form-control mb-4" placeholder="Email" name="em" [(ngModel)]="detail.email"
+              autocomplete="new-password" required />
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-5">
+          <div class="form-group position-relative">
+            <input type="text" class="form-control mb-4" placeholder="Phone" name="phe"
+              [(ngModel)]="detail.mobileNumber" autocomplete="new-password" required />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="offset-md-1 col-sm-12 col-md-5">
+          <div class="form-group position-relative">
+            <input type="text" class="form-control mb-4" placeholder="Password" name="esssm" [(ngModel)]="detail.password"
+              autocomplete="new-password" required />
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-5">
+          <div class="form-group position-relative">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Status</label>
+              </div>
+              <select class="custom-select" placeholder="Choose Status" id="inputGroupSelect01"
+                [(ngModel)]="detail.status" name="stat2" (change)="editStatus($event.target.value)">
+                <option value="Active" [selected]="detail.status === 'Active'">Active</option>
+                <option value="Inactive" [selected]="detail.status === 'Inactive'">Inactive</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12" style="text-align: center;">
+          <button type="button" class="btn btn-success" [disabled]="!subForm2.valid"
+            (click)="editEmployee(detail.stockManagerId)">EDIT</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+</div>

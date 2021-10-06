@@ -1,1 +1,527 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~@danielmoncada/angular-datetime-picker/assets/style/picker.min.css";
+
+@font-face {
+    font-family: "BrownRegular";
+    src: url("assets/fonts/BrownStd-Regular.eot?") format("eot"), url("assets/fonts/BrownStd-Regular.otf") format("opentype"), url("assets/fonts/BrownStd-Regular.svg#BrownRegular") format("svg"), url("assets/fonts/BrownStd-Regular.ttf") format("truetype"), url("assets/fonts/BrownStd-Regular.woff") format("woff");
+    }
+
+    @font-face {
+    font-family: "BrownBold";
+    src: url("assets/fonts/BrownStd-Bold.eot?") format("eot"), url("assets/fonts/BrownStd-Bold.otf") format("opentype"), url("assets/fonts/BrownStd-Bold.svg#BrownBold") format("svg"), url("assets/fonts/BrownStd-Bold.ttf") format("truetype"), url("assets/fonts/BrownStd-Bold.woff") format("woff");
+    }
+
+    @font-face {
+    font-family: "Lettera";
+    src: url("assets/fonts/Lettera.eot?") format("eot"), url("assets/fonts/Lettera.svg#Lettera") format("svg"), url("assets/fonts/Lettera.ttf") format("truetype"), url("assets/fonts/Lettera.woff") format("woff");
+    }
+
+    @font-face {
+    font-family: "LetteraBold";
+    src: url("assets/fonts/Lettera-Bold.eot?") format("eot"), url("assets/fonts/Lettera-Bold.svg#LetteraBold") format("svg"), url("assets/fonts/Lettera-Bold.ttf") format("truetype"), url("assets/fonts/Lettera-Bold.woff") format("woff");
+    }
+    body {
+    font-family:"BrownRegular" !important;
+    background: #fff !important;
+    font-size:14px !important;
+    }
+
+    p {
+    font-family:"BrownRegular";
+    font-size: 1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #000;
+    }
+
+    a{ color:inherit;
+    transition: all 0.3s;
+    text-decoration:none !important; }
+    a:hover,
+    a:focus {
+    text-decoration:none !important;
+    }
+
+    .navbar {
+    padding: 10px !important;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 3px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+    }
+
+    .line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+    }
+    h1,h2,h3,h4,h5,h6{ font-family: "BrownBold"; }
+    .brown-bold{ font-family: "BrownBold"; }
+    .brown-regular{ font-family: "BrownRegular"; }
+    .gray{ color:#ccc !important; }
+    table a{ color:inherit !important; }
+    table a:hover,table a:focus{ color:#40aab8 !important; }
+    .form-control{ font-size:14px !important; }
+    select.form-control:not([size]):not([multiple]) {
+    height: calc(2rem + 2px);
+    }
+    .float-icon{ position:absolute; top:5px; right:15px; }
+    .nav-justified .nav-item{ flex-basis:auto; }
+    /* ---------------------------------------------------
+    login
+    ------------------------------------------------- */
+    .foot-text p{text-align:center;
+                 font-family:'BrownRegular';
+                 font-weight:normal;
+                 font-size:15px;
+                 text-transform:inherit;
+                 color:#888;}
+                 .login-box{
+                    width:100%;
+                    /*height:290px;
+                    position:absolute;
+                    left:0;
+                    right:0;
+                    top:0;
+                    bottom:0;
+                    margin:auto;*/
+                    position:relative;
+                    transform:translate(0,20%);
+                    color:#000;
+                }
+    .login-box input{
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom:2px solid #000;
+    border-radius:0;
+    background:none;
+    box-shadow:none;
+    text-align:left;
+    font-family:"BrownBold";
+    font-size:16px;
+    text-transform:inherit;
+    color:#000;
+    padding: 5px 10px 5px 40px;
+    }
+
+    .login-box ::-webkit-input-placeholder {
+    color: #ccc;
+    font-family: BrownBold;
+
+    }
+
+    .login-box :-moz-placeholder {
+    /* Firefox 18- */
+    color: #ccc;
+    font-family: BrownBold;
+
+    }
+
+    .login-box ::-moz-placeholder {
+    /* Firefox 19+ */
+    color: #ccc;
+    font-family: BrownBold;
+
+    }
+
+    .login-box :-ms-input-placeholder {
+    color: #ccc;
+    font-family: BrownBold;
+
+    }
+    .login-box input:focus {
+    background-color: #fff;
+    box-shadow:none;
+    border-color:#40aab8;
+    outline:0;
+    color:#000;
+    }
+
+    .checkbox-custom, .radio-custom {
+    opacity: 0;
+    position: absolute;
+    }
+
+    .checkbox-custom, .checkbox-custom-label, .radio-custom, .radio-custom-label {
+    display: inline-block;
+    vertical-align: middle;
+
+    cursor: pointer;
+    }
+
+    .checkbox-custom-label, .radio-custom-label {
+    position: relative;
+    font-family:"BrownBold";
+    font-size:16px;
+    text-transform:uppercase
+    }
+
+    .checkbox-custom + .checkbox-custom-label:before, .radio-custom + .radio-custom-label:before {
+    content: '';
+    background: #fff;
+    border: 2px solid #ddd;
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    padding: 2px;
+    margin-right: 10px;
+    text-align: center;
+    border-radius:100%;
+    margin-top:-5px;
+    margin-left:0 !important; margin-bottom:0 !important;
+    }
+
+    .checkbox-custom:checked + .checkbox-custom-label:before {
+    background: #40aab8;
+    margin-top:-5px;
+    }
+
+    .radio-custom + .radio-custom-label:before {
+    border-radius: 50%;
+    }
+
+    .radio-custom:checked + .radio-custom-label:before {
+    background: #ccc;
+    }
+    .log-btn{ background:input#40aab8; border-color:#40aab8; border-radius:0; padding:6px 20px; text-transform:uppercase; font-family:"Lettera"; font-size:14px }
+    .login-box .checkmark{ height:15px; width:15px; top:2px; }
+    .login-box .checkmark:after { content: ""; height: 7px; width: 7px; left: 2px; top: 2px; }
+    .user-icon{ position:absolute; height:25px; width:25px; left:0; top:0; background:url(assets/images/profile.PNG) #fff; background-size: cover; }
+    .pass-icon{ position:absolute; height:25px; width:25px; left:0; top:0; background:url(assets/images/lock.png) #fff; background-size: cover; }
+    .otp-icon{ position:absolute; height:25px; width:25px; left:0; top:0; background:url(assets/images/otp.png) #fff; background-size: cover; }
+    /* ---------------------------------------------------
+    Header Style
+    ----------------------------------------------------- */
+
+    .mob-head{ background:#333; padding:10px; display:block; margin-left:-10px; margin-right:-10px; margin-top:-15px; margin-bottom:10px; color:#fff; }
+    .logout-btn{ right: 15px; top: 15px; }
+    .logout-btn img{ -webkit-filter: invert(100%); /* Safari 6.0 - 9.0 */
+    filter: invert(100%);}
+    nav.fixed-top{ height:59px; }
+    nav h5{ margin-bottom:0 !important; }
+    .navbar .btn-default{ background:none; }
+    .mob-heading span{ display:block; color:#ccc; font-size:11px; text-align:center; font-family:"BrownRegular"; font-weight:normal; }
+    .mob-srch{ padding:0 10px; }
+    .collapse-btn{ padding:0 10px; }
+    /* ---------------------------------------------------
+    SIDEBAR STYLE
+    ----------------------------------------------------- */
+
+    .wrapper {
+    display: flex;
+    width: 100%;
+    }
+
+    #sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background: #232323;
+    color: #fff;
+    transition: all 0.3s;
+    }
+
+    #sidebar.active {
+    margin-left: -250px;
+    }
+
+    #sidebar .sidebar-header {
+    padding:10px 15px;
+    background: #000;
+    margin-bottom:20px;
+    height:60px;
+    }
+
+    #sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #47748b;
+    }
+
+    #sidebar ul p {
+    color: #fff;
+    padding: 10px;
+    }
+    #sidebar ul li { position:relative; }
+    #sidebar ul li a {
+    padding: 10px 5px 10px 35px;
+    font-size: .9em;
+    display: inline-block;
+    width:100%;
+    position:relative;
+    font-family: "BrownRegular";
+    color:#797979 !important;
+    text-transform:capitalize;
+    text-decoration:none;
+    }
+
+    #sidebar ul li a:hover {
+    color: #40aab8 !important;
+    background: #171717;
+    text-decoration:none;
+    }
+
+    #sidebar ul ul li.active>a
+    /*,a[aria-expanded="true"]*/ {
+    color: #40aab8;
+    }
+
+    #sidebar ul li.active>a
+    /*,a[aria-expanded="true"]*/ {
+    color: #40aab8 !important;
+    }
+    /*a[aria-expanded="true"]{ background:#171717; }*/
+    #sidebar ul ul li.active::before{ background:#40aab8; width:6px; height:100%; position:absolute; content:""; left:0; top:0;
+        z-index: 1; }
+    a[data-toggle="collapse"] {
+    position: relative;
+    }
+
+    #sidebar .dropdown-toggle::after{
+    font-family: "Font Awesome 5 Free";
+    content: "\f107";
+    position:absolute;
+    font-weight:600;
+    border-right:none;
+    border-left:none;
+    border-top:0;
+    left: auto;
+    top:5px;
+    font-size:1.6em;
+    right:20px;
+    margin-right:10px;
+    }
+    #sidebar ul ul a {
+    font-size: 0.8em !important;
+    background: #171717;
+    padding:12px 5px 12px 58px;
+    line-height:initial;
+    }
+
+
+
+    a.article,
+    a.article:hover {
+    background: #6d7fcc !important;
+    color: #fff !important;
+    }
+
+    /* ---------------------------------------------------
+    CONTENT STYLE
+    ----------------------------------------------------- */
+
+    #content {
+        width: calc(100% - 250px);
+        padding:100px 15px 40px 15px;
+        min-height: 100vh;
+        transition: all 0.3s;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    #content.active {
+    width: 100%;
+    }
+    #content nav.fixed-top{ left:250px; transition: all 0.3s; }
+    #content.active nav.fixed-top{ left:0; }
+
+    /* ---------------------------------------------------
+    NAV PILLS
+    ----------------------------------------------------- */
+    .dash-tab .nav-pills{ margin-bottom:15px; }
+    .dash-tab .nav-pills .nav-link{
+    border-bottom: 2px solid #ccc;
+    border-radius:0;
+    color:#ccc;
+    font-size:16px;
+    font-family:"BrownRegular";
+    text-transform:uppercase;
+    font-weight:bold;
+    }
+    .dash-tab .nav-pills .nav-link.active, .nav-pills.custom-tab .show>.nav-link{
+    background:none;
+    border-radius:0;
+    color:#000;
+    border-bottom: 2px solid #000;
+    }
+    .dash-tab .nav-link{ /*padding: .5rem 3rem;*/ text-align:center; }
+    .dash-tab .tab-content{ margin-top:15px; }
+    .dash-tab .tab-pane{ padding-left:0; padding-right:0; }
+    .dash-tab select{ border-radius:0px; border-top:0; border-left:0; border-right:0; }
+
+    /* ---------------------------------------------------
+    CUSTOM STYLES
+    ----------------------------------------------------- */
+
+    /* Customize the label (the container) */
+    .chk-holder {
+    display: inline-block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    }
+
+    /* Hide the browser's default checkbox */
+    .chk-holder input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+    }
+
+    /* Create a custom checkbox */
+    .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border:2px solid #ccc;
+    }
+
+
+
+    /* When the checkbox is checked, add a blue background */
+    .chk-holder input:checked ~ .checkmark {
+    border-color: #000;
+    }
+    .chk-holder label{
+    font-family:"BrownRegular";
+    color:#ccc;
+    }
+    input:checked + label{ color:#000; }
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    height: 12px;
+    width: 12px;
+    background:#000;
+    left:2px;
+    top:2px;
+    }
+
+    /* Show the checkmark when checked */
+    .chk-holder input:checked ~ .checkmark:after {
+    display: block;
+    }
+
+    .cus-srch .btn{ background:none; border-radius:0; border-bottom:1px solid #ccc; color:#ccc; }
+    .cus-srch input[type=text]{ border-radius:0; border-left:none; border-right:none; border-top:none; font-size:14px; }
+   /* .form-control:focus,.form-control:hover{ border-bottom:1px solid #000; box-shadow:none; }*/
+     .form-control:focus,.form-control:hover{ border-bottom-color:#000; box-shadow:none;  }
+     .details_table{width:100%;}
+    .details_table th{ font-size:10px; font-family:"BrownRegular"; position:relative; white-space:nowrap; text-transform:uppercase; border-top:none !important; font-weight:normal; position:relative; }
+    .green-text{ color:#40aab8; }
+    .caret-sort{ color:#40aab8; font-size:18px; position:absolute; margin-top:-5px; }
+    th .caret-sort{ right:auto; margin-left:5px; color:#40aab8 !important; }
+    .fltr-btn .btn-secondary{ background:none; border:none; border-bottom:2px solid #ccc; border-radius:0; color:#ccc; font-family:"BrownRegular"; font-size:12px; padding:7px 20px; }
+    .fltr-btn .btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle{ background:none; color:#000; border-color:#000; }
+    .dtls-ctrl .log-btn{ font-size:14px; font-family:"BrownRegular"; text-transform:lowercase; }
+    .actv-acnt{ font-weight:bold; font-family:BrownBold; }
+    /* ---------------------------------------------------
+    GRAPH STYLES
+    ----------------------------------------------------- */
+    .graph-holder{ max-width:100%; overflow:auto; white-space: nowrap; position:relative; width:100%; display:block; }
+    .graph-frame{ position:relative; margin-top:30px; height:80vh; width:100%; }
+    .big .graph-frame{ width: 2000px; }
+    .graph-bot-section h6,.graph-bot-section p{ text-transform:capitalize; }
+    .gray-line{ width:100%; border-bottom:1px solid #ccc; position:relative; }
+    .gray-line:first-child{ border-top:1px solid #ccc; }
+    .graph-section{ position:absolute; width:100%; height:100%; bottom:0; display:flex; align-items: flex-end; justify-content: space-around; padding:0 30px; }
+    .bar-holder{ width:16%; height:100%; position:relative; }
+    .gray-bar{ width:100%; position: absolute; bottom: 0; background: #eee; color:#000; }
+    .green-bar{ width:100%; background:#40aab8; position:absolute; bottom:0; color:#fff; }
+    span.val{ background:#fff; min-width:40px; position:absolute; bottom:-10px; }
+    span.val1{ background:#fff; min-width:40px; position:absolute; top:-10px; }
+    .graph-bot-section{ padding:0 30px; width:auto; }
+    .big .graph-bot-section{ width:2000px; }
+    .bar-holder{ text-align:center; }
+    .bar-holder span{ font-size:14px; position:relative; top:10px }
+    .static-val{ width:16%; border-bottom:2px solid #40aab8; text-align:center; padding:7px 10px; }
+
+    /* ---------------------------------------------------
+    Dashboard
+    ----------------------------------------------------- */
+
+    h6.small span{ font-weight:bold; font-family: "Lettera"; }
+    .shortcut-btn{ border:1px solid #40aab8; font-family: "Lettera"; text-align:center; padding:7px; text-transform:uppercase; white-space:nowrap; text-overflow:ellipsis; text-decoration:none !important; overflow:hidden; box-shadow:none; color:#212529 !important; }
+    .shortcut-btn:hover{ background:#40aab8; color:#fff !important; }
+
+    .loader-holder{ width:100%; height: 100%; position:fixed; left:0; top:0; bottom:0; background: rgba(0,0,0,0.6); z-index: 99999;}
+.loader img{ object-fit:contain;position:absolute; margin:auto; width:150px; left:0; right:0; top:0%; bottom:0; }
+
+.shortcut-btn{ border:1px solid #40aab8; font-family: "Lettera"; text-align:center; padding:7px; text-transform:uppercase; white-space:nowrap; text-overflow:ellipsis; text-decoration:none !important; overflow:hidden; box-shadow:none; color:#212529 !important; background:none; box-shadow:none; }
+
+.ng-select .ng-select-container{
+    border: none;
+     border-bottom: 1px solid #ccc;
+     border-radius: 0; }
+     .ng-select .ng-select-container:hover{ box-shadow:none ; border-bottom:1px solid #000; }
+     .extra-small{ font-size:70%; font-family:"LetteraBold"; }
+
+     /* ---------------------------------------------------
+     Stats
+---------------------------------------------------- */
+.prof-img{ width:150px; height:150px; border:2px solid #000; padding:5px; margin-right:10px; border-radius:100%; }
+.prof-img img{ width:136px; height:136px; object-fit:cover; border-radius:100%; }
+.black-border{ border-color:#000; }
+.black-border:hover{ background:#000; }
+.red-text{ color:red !important; }
+.stats_table th{ font-size:10px; border-top: none !important; font-family:"BrownRegular"; position:relative; white-space:nowrap; text-transform:uppercase; border-top:none; font-weight:normal; position:relative; padding-left:0; text-align:left }
+.stats_table th:first-child,.stats_table td:first-child { white-space: nowrap;}
+.stats_table td:last-child{ color:#40aab8; font-weight:bold }
+.stats_table td{ padding-left:0; vertical-align:middle; text-align:left; }
+.stats-head{ position:relative; overflow:hidden; }
+.stats-head span{ background:#fff; }
+.stats-head:before{ content: ""; position: absolute;background: #dee2e6;height: 2px;width: 100%; left:0; top: 10px; z-index:-1 }
+.stats-ponts{ position:absolute; right:0; top:5px; text-transform:lowercase; background:#fff; padding-left:15px; padding-right:30px; z-index:1; text-align:right }
+.panel {
+  /*padding: 0 18px;*/
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+.accordion:after {
+    content: '\f078';
+	font-family:'Font Awesome\ 5 Free';
+    color: #dee2e6;
+	font-size:22px;
+    font-weight: bold;
+	position:absolute;
+    right: 0;
+    margin-left: 5px;
+	z-index:5;
+	cursor: pointer;
+}
+.accordion.active:after {
+    content: "\f077";
+}
+.pro-pic-sec{ display:flex;flex-wrap:wrap; align-items:center }
+.score-sec{ position:relative; overflow:hidden;display:flex;flex-wrap:wrap; justify-content:center; padding:0 15px 0 30px;  }
+.score-sec:before{ content:""; position:absolute; width:2px; background:#000; height:100%; left:0; top:15; }
+
+

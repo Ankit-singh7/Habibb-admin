@@ -1,0 +1,23 @@
+::-webkit-datetime-edit { padding: 1em; }
+/* ::-webkit-datetime-edit-fields-wrapper {  } */
+::-webkit-datetime-edit-text { padding: 0 0.3em; }
+/* ::-webkit-datetime-edit-month-field { color: blue; }
+::-webkit-datetime-edit-day-field { color: green; }
+::-webkit-datetime-edit-year-field { color: purple; } */
+::-webkit-inner-spin-button { display: none; }
+::-webkit-calendar-picker-indicator { color : green; }
+
+div.scrollmenu {
+
+    overflow: auto;
+    white-space: nowrap;
+  }
+  
+  div.scrollmenu table {
+    display: inline-block;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+    width:100% !important;
+  }
+  

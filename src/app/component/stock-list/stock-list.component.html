@@ -1,0 +1,61 @@
+
+
+
+      <div class="container-fluid">
+        <div class="row dash-tab">
+          <div class="col-sm-3">
+            <div class="form-group">
+              <button class="shortcut-btn d-block w-100" (click)="resetStock()"><b>Reset Stock</b></button>
+            </div>
+          </div>
+          <div class="offset-md-7 col-sm-12 col-md-2 ">
+            <div class="form-group">
+              SELECT PER PAGE
+              <select name="pay" class="form-control pl-0" id="pay" [(ngModel)]="selectedPerPage" (change)="onLimitSelect($event.target.value)">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+             </div>
+          </div> 
+  
+  
+          <div class="col-sm-12">
+            <div class="table-responsive">
+              <table class="table details_table">
+                <thead>
+                  <tr>
+                    <th scope="col">Ingredients Name<a href='javascript:void(0)' (click)="changeOrder('name')"
+                        class="caret-sort"><i class="fa" [class.fa-caret-down]="!sortOrder"
+                          [class.fa-caret-up]="sortOrder"></i></a></th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Stock</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf='ingredientList?.length; else elseBlock'>
+                  <tr *ngFor='let item of ingredientList| paginate: { itemsPerPage: selectedPerPage, currentPage: currentpage, totalItems: total};  index as i;'>
+                    <td><B>{{item.name | titlecase}}</B></td>
+                    <td>{{item.category}}</td>
+                    <td>{{item.unit}}</td>
+                    <td>{{item.stock?item.stock:'NA'}}</td>
+                  </tr>
+                </tbody>
+                <ng-template #elseBlock>
+                  <tbody>
+                    <tr>
+                      <td class="text-center" colspan="100%">{{response}}</td>
+                    </tr>
+                  </tbody>
+                </ng-template>
+              </table>
+              <pagination-controls (pageChange)="getIngredientList($event)" style="text-align: center;"></pagination-controls>
+            </div>
+          </div>
+  
+  
+        </div>
+      </div>
+
+

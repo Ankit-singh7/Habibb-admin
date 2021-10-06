@@ -1,0 +1,217 @@
+
+ 
+
+        <div class="container-fluid">
+            <div class="row dash-tab">
+              <!-- <div class="col-sm-3">
+                <div class="form-group">
+                  <button class="shortcut-btn d-block w-100" data-toggle="modal" data-target="#addWaiter"><b>+ Add
+                      Stock In</b></button>
+                </div>
+              </div> -->
+
+              <div class="offset-md-10 col-sm-12 col-md-2 ">
+                <div class="form-group">
+                  SELECT PER PAGE
+                  <select name="pay" class="form-control pl-0" id="pay" [(ngModel)]="selectedPerPage" (change)="onLimitSelect($event.target.value)">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                 </div>
+              </div>
+      
+      
+              <div class="col-sm-12">
+                <div class="table-responsive">
+                  <table class="table details_table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Ingredients Name<a href='javascript:void(0)' (click)="changeOrder('ingredient')"
+                            class="caret-sort"><i class="fa" [class.fa-caret-down]="!sortOrder"
+                              [class.fa-caret-up]="sortOrder"></i></a></th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Unit</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Date</th>
+                        <!-- <th scope="col">Action</th> -->
+                      </tr>
+                    </thead>
+                    <tbody *ngIf='stockInList?.length; else elseBlock'>
+                      <tr *ngFor='let item of stockInList| paginate: { itemsPerPage: selectedPerPage, currentPage: currentpage, totalItems: total};  index as i;'>
+                        <td><B>{{item.ingredient | titlecase}}</B></td>
+                        <td>{{item.category}}</td>
+                        <td>{{item.unit}}</td>
+                        <td>{{item.quantity}}</td>
+                        <td>{{item.createdOn | date:'MMM d, y, h:mm:ss a'}}</td>
+                        <!-- <td>
+                          <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#addWaiter2"
+                            (click)="getIngredientDetail(item.food_ingredient_id)"><i class="fa fa-pencil"></i></button>
+                          <button type="button" style="margin-left:4px" class="btn btn-danger btn-sm"
+                            (click)="deleteIngredient(i,item.food_ingredient_id)"><i class="fa fa-trash-o"></i></button>
+                        </td> -->
+                      </tr>
+                    </tbody>
+                    <ng-template #elseBlock>
+                      <tbody>
+                        <tr>
+                          <td class="text-center" colspan="100%">{{response}}</td>
+                        </tr>
+                      </tbody>
+                    </ng-template>
+                  </table>
+                  <pagination-controls (pageChange)="getStockInList($event)" style="text-align: center;"></pagination-controls>
+                </div>
+              </div>
+      
+      
+            </div>
+          </div>
+  
+    
+      <div id="addWaiter" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true"  #closeAddModal>
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content" style="padding:2%">
+            <form id="subform" role="form" #subForm="ngForm">
+              <div class="row">
+                <div class="col-12">
+                  <h5>Add Stock</h5>
+                </div>
+                <!-- <div class="col-sm-11">
+                    <div class="form-group position-relative">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Select Category</label>
+                          </div>
+                          <select class="custom-select" placeholder="Choose Status" id="inputGroupSelect01" [(ngModel)]="selectedCategory" name="ic" (change)="getselectedIngredient()"  required>
+                            <ng-container *ngFor="let item of categoryList">
+                                <option [value]="item.ingredient_category_id">{{item.name}}</option>
+                            </ng-container>
+                           
+                          </select>
+                        </div>
+                      </div>
+                </div> -->
+                <div class="col-sm-11">
+                  <div class="form-group position-relative">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text" for="inputGroupSelect01">Select Ingredient</label>
+                        </div>
+                        <select class="custom-select" placeholder="Choose Status" id="inputGroupSelect01" [(ngModel)]="selectedIngredient" name="ig" (ngModelChange)="getSelectedIngredient($event)"  required>
+                          <ng-container *ngFor="let item of ingredientList">
+                              <option [ngValue]="item">{{item.name}}</option>
+                          </ng-container>                                  
+                        </select>
+                      </div>
+                    </div>
+              </div>
+                <!-- <div class="col-sm-11">
+                    <div class="form-group position-relative">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Select Unit</label>
+                          </div>
+                          <select class="custom-select" placeholder="Choose Status" id="inputGroupSelect01" [(ngModel)]="selectedUnit" name="un"  required>
+                            <ng-container *ngFor="let item of unitList">
+                                <option [ngValue]="item.unit_id">{{item.name}}</option>
+                            </ng-container>
+                           
+                          </select>
+                        </div>
+                      </div>
+                </div> -->
+                <div class="col-sm-11">
+                  <div class="form-group position-relative">
+                    <input type="text" class="form-control mb-4" placeholder="Quantity" name="quantName" [(ngModel)]="quantity"
+                      required />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12" style="text-align: center;">
+                  <button type="button" class="btn btn-success" [disabled]="!subForm.valid"
+                    (click)="addIngredient()">SUBMIT</button>
+                </div>
+              </div>
+            </form>
+      
+          </div>
+        </div>
+      </div>
+      
+      <!-- <div id="addWaiter2" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true" #closeEditModal>
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content" style="padding:2%">
+            <form id="subform2" role="form" #subForm2="ngForm" *ngIf="detail">
+                <div class="row">
+                    <div class="col-12">
+                      <h5>Edit Ingredient Detail</h5>
+                    </div>
+                    <div class="col-sm-11">
+                        <div class="form-group position-relative">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Select Category</label>
+                              </div>
+                              <select class="custom-select" placeholder="Choose Status" id="inputGroupSelect01"  name="ectt" [(ngModel)]="detail.category_id">
+                                <ng-container *ngFor="let item of categoryList">
+                                    <option [value]="item.ingredient_category_id" [selected]="item.ingredient_category_id === detail.category_id">{{item.name}}</option>
+                                </ng-container>
+                               
+                              </select>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-sm-11">
+                      <div class="form-group position-relative">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <label class="input-group-text" for="inputGroupSelect01">Select Ingredient</label>
+                            </div>
+                            <select class="custom-select" placeholder="Choose Status" id="inputGroupSelect01"  name="ecrt" [(ngModel)]="detail.ingredient_id">
+                              <ng-container *ngFor="let item of ingredientList">
+                                  <option [value]="item.ingredient_id" [selected]="item.ingredient_id === detail.ingredient_id">{{item.name}}</option>
+                              </ng-container>
+                             
+                            </select>
+                          </div>
+                        </div>
+                  </div>
+                    <div class="col-sm-11">
+                        <div class="form-group position-relative">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Select Unit</label>
+                              </div>
+                              <select class="custom-select" placeholder="Choose Status" id="inputGroupSelect01"  name="eu" [(ngModel)]="detail.unit_id">
+                                <ng-container *ngFor="let item of unitList">
+                                    <option [value]="item.unit_id" [selected]="item.unit_id === detail.unit_id">{{item.name}}</option>
+                                </ng-container>
+                               
+                              </select>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-sm-11">
+                      <div class="form-group position-relative">
+                        <input type="text" class="form-control mb-4" placeholder="Quantity" name="en" [(ngModel)]="detail.quantity"
+                          required />
+                      </div>
+                    </div>
+                  </div>
+              <div class="row">
+                <div class="col-12" style="text-align: center;">
+                  <button type="button" class="btn btn-success" [disabled]="!subForm2.valid"
+                    (click)="editIngredient(detail.food_ingredient_id)">EDIT</button>
+                </div>
+              </div>
+            </form>
+      
+          </div>
+        </div>
+      </div>
+   -->

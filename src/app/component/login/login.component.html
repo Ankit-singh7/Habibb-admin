@@ -1,0 +1,66 @@
+<!-- <div class="loader loader-holder" *ngIf="loaderStatus">
+    <img class="load img-responsive" src="../../../../assets/images/aptive-loader.gif">
+  </div> -->
+  <div class="container-fluid position-relative" style="height:100vh;">
+    <div class="row">
+      <div class="login-box" style="margin-top: 7%;" >
+        <div class="col-xl-4 offset-xl-4 col-md-6 offset-md-3">
+          <div class="p-2"> <h2 style="text-align: center;"><B> HA<span style="color:red">B</span>IBB</B></h2>
+  
+            <form id=loginForm role="form" #loginForm="ngForm">
+  
+              <!-- <div class="group animated fadeIn" *ngIf="serverError">
+                <div class="alert alert-danger text-center ">
+                  <a href="#" data-dismiss="alert" aria-label="close"> <span style="float:right"
+                      class="text-danger">&times;</span> </a>
+                  {{ serverError || 'Incorrect Username or Password!'}}
+                </div>
+              </div> -->
+              <div class="group animated fadeIn" *ngIf="loginError">
+                <div class="alert alert-danger text-center ">
+                {{message}}
+
+                </div>
+              </div>
+  
+              <div class="form-group position-relative">
+                <input type="text" class="form-control mb-4" placeholder="USERNAME" name="email" [(ngModel)]="email" pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                  required />
+                <span class="user-icon"></span>
+              </div>
+              <div class="form-group position-relative">
+                <input type="password" class="form-control mb-4" placeholder="PASSWORD" name="password"
+                  [(ngModel)]="password" required />
+                <span class="pass-icon"></span>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col">
+                    <div class="chk-holder">
+                      <input type="checkbox" class="chkmrk" id="ossm" [(ngModel)]="rememberMe" name="rememberMe">
+                      <label class="text-uppercase" for="ossm">Remember Me</label>
+                      <span class="checkmark"></span>
+                    </div>
+                  </div>
+                  <!--<div class="col text-right">
+                        <a class="brown-regular gray" href="#">FORGOT PASSWORD ?</a>
+                    </div>-->
+                </div>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary log-btn w-100" (click)="login()" [disabled]="!loginForm.valid">Login</button>
+              </div>
+            </form>
+
+  
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-lg-10 offset-lg-1 mt-5">
+
+  
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
