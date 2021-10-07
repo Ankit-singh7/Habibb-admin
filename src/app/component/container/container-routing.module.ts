@@ -35,6 +35,10 @@ const routes: Routes = [
       loadChildren: () => import('../../../app/component/brand/brand.module').then( m => m.BrandModule)
     },
     {
+      path: 'appointment-list',
+      loadChildren: () => import('../../../app/component/appointment-list/appointment-list.module').then( m => m.AppointmentListModule)
+    },
+    {
       path: 'billing',
       loadChildren: () => import('../../../app/component/billing/billing.module').then( m => m.BillingModule)
     },

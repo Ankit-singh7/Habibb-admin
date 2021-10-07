@@ -1,0 +1,94 @@
+
+
+      <div class="container-fluid">
+        <div class="row dash-tab">
+            <div class="col-sm-5 cus-srch ">
+                <div class="form-group">
+                  BRANCH WISE
+                  <select name="dev" class="form-control pl-0" id="dev" [(ngModel)]="selectedBranchId" (change)="onOptionSelect('branch',$event.target.value)">
+                    <ng-container *ngFor="let item of branchList">
+                      <option [value]="item.id">{{item.name}}</option>
+                    </ng-container>
+                  </select>
+                 </div>
+              </div> 
+              <div class="col-sm-5 cus-srch ">
+                <div class="form-group">
+                  EMPLOYEE WISE
+                  <select name="cars" class="form-control pl-0" id="cars" [(ngModel)]="selectedEmployee" (change)="onOptionSelect('employee',$event.target.value)">
+                    <ng-container *ngFor="let item of employeeList">
+                      <option [value]="item.id">{{item.name}}</option>
+                    </ng-container>
+                  </select>
+                 </div>
+              </div>
+            <div class="col-sm-3 cus-srch">
+                <div class="form-group">
+                   FROM DATE
+                  <input type="date" class="form-control pl-0" id="birthday1" placeholder="From Date" [(ngModel)]="selectedStartDate" name="selectedSDate" (change)="changedDate('start',$event.target.value)">
+                  
+                </div>
+              </div> 
+            <div class="col-sm-3 cus-srch">
+              <div class="form-group">
+                 TO DATE
+                <input type="date" class="form-control pl-0" id="birthday2" placeholder="To Date" [(ngModel)]="selectedEndDate" name="selectedEDate" (change)="changedDate('end',$event.target.value)">
+                
+              </div>
+            </div> 
+            <div class="col-sm-3">
+                <div class="form-group mt-3">
+                  <button class="shortcut-btn w-100" (click)="onDateSelect()"><b>SEARCH</b></button>
+                </div>
+              </div>
+              <!-- <div class="offset-md-1 col-sm-2 cus-srch">
+                <div class="form-group">
+                  SELECT PER PAGE
+                  <select name="pay" class="form-control pl-0" id="pay" [(ngModel)]="selectedPerPage" (change)="onLimitSelect($event.target.value)">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                 </div>
+              </div>  -->
+            
+                  
+                  <div class="col-sm-12">
+                 <div class="table-responsive">
+                  <table class="table details_table ">
+                    <thead>
+                      <tr>
+                        <th scope="col">Service Name<a href = 'javascript:void(0)' (click)="changeOrder('food_name')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.food_name" [class.fa-caret-up]="!sortFields.food_name"></i></a></th>
+                        <th scope="col">Head Count<a href = 'javascript:void(0)' (click)="changeOrder('quantity')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.quantity" [class.fa-caret-up]="!sortFields.quantity"></i></a></th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf='reportList?.length; else elseBlock' style="width:100%">
+                      <tr *ngFor = "let item of reportList index as i;">
+                        <ng-container *ngIf="item.quantity > 0">
+
+                            <td><B>{{item.service_name | titlecase}}</B></td>
+                            <!-- <td>{{item.total_price}}</td> -->
+                            <td>{{item.quantity}}</td>
+                        </ng-container>
+                      </tr>
+                     </tbody>
+                      <ng-template #elseBlock>
+                        <tbody>
+                          <tr>
+                            <td class="text-center" colspan="100%">{{response}}</td>
+                          </tr>
+                        </tbody>
+                      </ng-template>
+                  </table>
+                  <!-- <pagination-controls (pageChange)="getAllReport($event)" style="text-align: center;"></pagination-controls> -->
+                </div>
+                </div>
+                
+          
+        </div>
+      </div>
+
+ 
+
+  

@@ -81,6 +81,9 @@ export class HeaderComponent {
          if(this.activatedRoute === '/user/change-pass') {
           this.title = 'CHANGE PASSWORD'
          }
+         if(this.activatedRoute === '/user/appointment-list') {
+          this.title = 'APPOINTMENT LIST'
+         }
       }
     })
   }

@@ -41,7 +41,8 @@ export class BillingComponent implements OnInit {
   public delivery = [];
   // const debouncetime = pipe(debounceTime(1000));
   
-
+  @ViewChild('yourElement') yourElement: ElementRef;
+  @ViewChild('yourNumber') yourNumber: ElementRef;
 
   public billList = [];
   public firstName: string;
@@ -56,6 +57,7 @@ export class BillingComponent implements OnInit {
   public selectedBranchId:any;
   public searchedName = '';
   public selectedDate = '';
+  public searchedNumber;
   public userNameList:any = [];
   public total: any;
   public branchList = [];
@@ -71,6 +73,7 @@ export class BillingComponent implements OnInit {
 
 
   @ViewChild('closeEditModal') closeEditModal: ElementRef;
+  
   selectedStartDate: any;
   selectedEndDate: any;
 
@@ -95,6 +98,28 @@ export class BillingComponent implements OnInit {
 
   onCustomerChange(){
    console.log(this.searchedName)
+  }
+
+  ngAfterViewInit(): void {
+    fromEvent(this.yourElement.nativeElement, 'input')
+      .pipe(map((event: Event) => (event.target as HTMLInputElement).value))
+      .pipe(debounceTime(1000))
+      .pipe(distinctUntilChanged())
+      .subscribe(data => {
+           this.searchedName = data.toLowerCase()
+            this.getBillList()
+
+      });
+
+      fromEvent(this.yourNumber.nativeElement, 'input')
+      .pipe(map((event: Event) => (event.target as HTMLInputElement).value))
+      .pipe(debounceTime(1000))
+      .pipe(distinctUntilChanged())
+      .subscribe(data => {
+           this.searchedNumber = data.toLowerCase()
+            this.getBillList()
+
+      });
   }
 
 
@@ -200,6 +225,7 @@ export class BillingComponent implements OnInit {
       createdOn: this.selectedDate,
       user_id: this.selectedOperator,
       customer_name: this.searchedName,
+      customer_phone: this.searchedNumber,
       employee_id: this.selectedEmployee
      }
      let filterStr = '';
@@ -331,7 +357,7 @@ export class BillingComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500
           })
-         this.billList.splice(index,1)
+          this.getBillList()
           this.ui.loader.hide()
         }, err => this.ui.loader.hide())
       } else if (result.isDenied) {

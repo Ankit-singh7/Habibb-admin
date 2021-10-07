@@ -88,7 +88,7 @@ export class ServiceTypeComponent implements OnInit {
      name: this.serviceTypeName
      }
      this.ServiceTypeList.push(data)
-     this.itemService.addService(data).subscribe((res) => {
+     this.itemService.addServiceType(data).subscribe((res) => {
       this.serviceTypeName = '';
       this.closeAddModal.nativeElement.click();
        swal.fire({
