@@ -34,6 +34,7 @@ export class ProductSalesReportComponent implements OnInit {
 selectedPerPage = 10;
 currentpage: number = 1;
 totalPage: number;
+prodS = '';
   
   
   
@@ -124,7 +125,7 @@ totalPage: number;
     this.ui.loader.show()
     this.salesService.getAllProductSalesReport(filterStr).subscribe((res) => {
       this.reportList = [];
-      if(res.data.result) {
+      if(res?.data?.result) {
         let arr1 = JSON.parse(JSON.stringify(res.data.result))
         let keyArr = arr1.map((i) => i.product_id)
         console.log(keyArr)

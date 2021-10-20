@@ -9,6 +9,12 @@
                   Brand</b></button>
             </div>
           </div>
+          <div class="offset-md-10 col-sm-12 col-md-2 cus-srch">
+            <div class="form-group">
+              SEARCH BRAND
+             <input type="text" class="form-control pl-0" id="birthday" placeholder="Search By Brand" [(ngModel)]="brnd" name="brnd">
+           </div>
+          </div> 
   
   
           <div class="col-sm-12">
@@ -23,7 +29,7 @@
                   </tr>
                 </thead>
                 <tbody *ngIf='brandList?.length; else elseBlock'>
-                  <tr *ngFor='let item of brandList; let i=index;'>
+                  <tr *ngFor="let item of brandList | filter: 'name': brnd; let i=index;">
                     <td><B>{{item.name}}</B></td>
 
                     <td>

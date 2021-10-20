@@ -4,6 +4,8 @@ import { EmployeeService } from 'src/app/service/employee/employee.service';
 import { LoaderService } from 'src/app/service/loader/loader.service';
 import { UserService } from 'src/app/service/user/user.service';
 import swal from 'sweetalert2';
+import { fromEvent } from 'rxjs';
+import { map, switchMap, filter, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 
 
@@ -34,6 +36,7 @@ export class EmployeeComponent implements OnInit {
   total: number;
 
   @ViewChild('closeEditModal') closeEditModal: ElementRef;
+  @ViewChild('employeeName') employeeName: ElementRef;
   designation: any;
 
   constructor(private router: Router,
@@ -42,6 +45,23 @@ export class EmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEmployeesList()
+  }
+
+  ngAfterViewInit(){
+    fromEvent(this.employeeName.nativeElement, 'input')
+    .pipe(map((event: Event) => (event.target as HTMLInputElement).value))
+    .pipe(debounceTime(1000))
+    .pipe(distinctUntilChanged())
+    .subscribe(data => {
+        if(data) {
+
+          this.firstName = this.titleCase(data)
+        } else {
+          this.firstName = '';
+        }
+          this.getEmployeesList()
+
+    });
   }
 
 
@@ -58,12 +78,22 @@ export class EmployeeComponent implements OnInit {
 
 
   getEmployeesList(page?:number) {
-    this.ui.loader.show()
-    if(page) {
 
-      this.currentpage = page
-    }
-    this.userService.getAllEmployee(this.selectedPerPage,this.currentpage).subscribe((res) => {
+    this.ui.loader.show()
+
+
+    let data = {
+      f_name:  this.firstName
+     
+     }
+     let filterStr = '';
+     for (let item in data) {
+        if(data[item]) {
+          filterStr = `${filterStr}${item}=${data[item]}&`
+        }
+        }
+     console.log(filterStr)
+    this.userService.getAllEmployee(filterStr).subscribe((res) => {
       if(res.data) {
         this.employeeList = res.data.result
         this.total = res.data.total
@@ -71,6 +101,15 @@ export class EmployeeComponent implements OnInit {
       this.ui.loader.hide()
     },(err) => this.ui.loader.hide())
   }
+
+
+  titleCase(string) {
+    var sentence = string.toLowerCase().split(" ");
+    for(var i = 0; i< sentence.length; i++){
+       sentence[i] = sentence[i][0].toUpperCase() + sentence[i].slice(1);
+    }
+   return sentence;
+ }
 
   onLimitSelect = (val) => {
     this.selectedPerPage = val

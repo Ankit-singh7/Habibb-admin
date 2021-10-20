@@ -6,6 +6,8 @@ import { LoaderService } from 'src/app/service/loader/loader.service';
 import { UserService } from 'src/app/service/user/user.service';
 import swal from 'sweetalert2';
 declare var $;
+import { fromEvent } from 'rxjs';
+import { map, switchMap, filter, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-operator',
@@ -34,6 +36,7 @@ export class OperatorComponent implements OnInit {
 
   @ViewChild('closeEditModal') closeEditModal: ElementRef;
   designation: any;
+  @ViewChild('operatorName') operatorName: ElementRef;
 
   constructor(private router: Router,
               private userService: UserService,
@@ -44,6 +47,31 @@ export class OperatorComponent implements OnInit {
     this.getOperatorList()
     this.getBranchList();
   }
+
+  ngAfterViewInit(){
+    fromEvent(this.operatorName.nativeElement, 'input')
+    .pipe(map((event: Event) => (event.target as HTMLInputElement).value))
+    .pipe(debounceTime(1000))
+    .pipe(distinctUntilChanged())
+    .subscribe(data => {
+        if(data) {
+
+          this.firstName = this.titleCase(data)
+        } else {
+          this.firstName = '';
+        }
+          this.getOperatorList()
+
+    });
+  }
+
+  titleCase(string) {
+    var sentence = string.toLowerCase().split(" ");
+    for(var i = 0; i< sentence.length; i++){
+       sentence[i] = sentence[i][0].toUpperCase() + sentence[i].slice(1);
+    }
+   return sentence;
+ }
 
 
 
@@ -65,11 +93,19 @@ export class OperatorComponent implements OnInit {
 
   getOperatorList(page?:number) {
     this.ui.loader.show()
-    if(page) {
 
-      this.currentpage = page
-    }
-    this.userService.getAllOperator(this.selectedPerPage,this.currentpage).subscribe((res) => {
+    let data = {
+      f_name:  this.firstName
+     
+     }
+     let filterStr = '';
+     for (let item in data) {
+        if(data[item]) {
+          filterStr = `${filterStr}${item}=${data[item]}&`
+        }
+        }
+     console.log(filterStr)
+    this.userService.getAllOperator(filterStr).subscribe((res) => {
       if(res.data) {
         this.operatorList = res.data.result
         this.total = res.data.total

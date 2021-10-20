@@ -168,7 +168,7 @@ export class BillingComponent implements OnInit {
   }
 
   getAllEmployee = () => {
-    this.userService.getAllEmployee().subscribe((res) => {
+    this.userService.getAllEmployee('status=Active').subscribe((res) => {
       if(res.data) {
         let tempArr = res.data.result.map((item) => ({
           id: item.user_id,

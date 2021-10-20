@@ -34,6 +34,7 @@ export class ServiceSalesReportComponent implements OnInit {
 selectedPerPage = 10;
 currentpage: number = 1;
 totalPage: number;
+servS = '';
   
   
   
@@ -125,7 +126,7 @@ totalPage: number;
     this.ui.loader.show()
     this.salesService.getAllServiceSalesReport(filterStr).subscribe((res) => {
       this.reportList = [];
-      if(res.data.result) {
+      if(res?.data?.result) {
         let arr1 = JSON.parse(JSON.stringify(res.data.result))
         let keyArr = arr1.map((i) => i.service_id)
         console.log(keyArr)

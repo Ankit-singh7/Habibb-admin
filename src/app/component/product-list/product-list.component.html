@@ -8,6 +8,12 @@
               <button class="shortcut-btn d-block w-100" data-toggle="modal" data-target="#addWaiter"><b>+ Add Product</b></button>
             </div>
           </div>
+          <div class="offset-md-10 col-sm-12 col-md-2 cus-srch">
+            <div class="form-group">
+              SEARCH BY PRODUCT
+             <input type="text" class="form-control pl-0" id="birthday" placeholder="Search By Product" [(ngModel)]="prod" name="prod">
+           </div>
+          </div> 
   
   
           <div class="col-sm-12">
@@ -21,13 +27,17 @@
                           <th scope="col">Brand Name<a href='javascript:void(0)' (click)="changeOrder('service_type_name')"
                             class="caret-sort"><i class="fa" [class.fa-caret-down]="!sortOrder"
                               [class.fa-caret-up]="sortOrder"></i></a></th>
+                              <th scope="col">Mostly Used<a href='javascript:void(0)' (click)="changeOrder('mostly_used')"
+                                class="caret-sort"><i class="fa" [class.fa-caret-down]="!sortOrder"
+                                  [class.fa-caret-up]="sortOrder"></i></a></th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody *ngIf='productList?.length; else elseBlock'>
-                  <tr *ngFor='let item of productList; let i=index;'>
+                  <tr *ngFor="let item of productList | filter: 'name': prod; let i=index;">
                     <td><B>{{item.name | titlecase}}</B></td>
                     <td><B>{{item.brand_name | titlecase}}</B></td>
+                    <td><B>{{item.mostly_used | titlecase}}</B></td>
                     <td>
                       <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#addWaiter2"
                         (click)="getProductDetail(item.product_id)"><i class="fa fa-pencil"></i></button>
@@ -81,6 +91,21 @@
                   required />
               </div>
             </div>
+            <div class="col-sm-12">
+              <div class="form-group position-relative">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="inputGroupSelect01">Mostly Used</label>
+                    </div>
+                    <select class="custom-select" placeholder="Choose Status" id="inputGroupSelect01" [(ngModel)]="used" name="vsd"  required>
+  
+                          <option value="yes">Yes</option>
+                          <option value="no">No</option>
+                     
+                    </select>
+                  </div>
+                </div>
+          </div>
 
           </div>
           <div class="row">
@@ -124,6 +149,21 @@
                   [(ngModel)]="detail.name" required />
               </div>
             </div>
+            <div class="col-sm-12">
+              <div class="form-group position-relative">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="inputGroupSelect01">Mostly Used</label>
+                    </div>
+                    <select class="custom-select" placeholder="Choose Status" id="inputGroupSelect01" [(ngModel)]="detail.mostly_used" name="vsd"  required>
+  
+                          <option value="yes" [selected]="detail.mostly_used === 'yes'">Yes</option>
+                          <option value="no"  [selected]="detail.mostly_used === 'no'">No</option>
+                     
+                    </select>
+                  </div>
+                </div>
+          </div>
 
           </div>
           <div class="row">

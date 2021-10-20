@@ -18,16 +18,18 @@ export class UserService {
     return this.http.post(`${environment.apiURL}/admin/forgotPassword`,data)
   }
 
-  public getAllEmployee(perPage?:number,currentPage?:number): Observable<any> {
-    let per_page = perPage?perPage:500
-    let current_page = currentPage?currentPage:1
-    return this.http.get(`${environment.apiURL}/user/e?per_page=${per_page}&current_page=${current_page}`)
+  public getAllEmployee(paramStrng?:string): Observable<any> {
+    let per_page = 500
+    let current_page = 1
+    let str = paramStrng?paramStrng:'';
+    return this.http.get(`${environment.apiURL}/user/e?per_page=${per_page}&current_page=${current_page}&${str}`)
   }
 
-  public getAllOperator(perPage?:number,currentPage?:number): Observable<any> {
-    let per_page = perPage?perPage:500
-    let current_page = currentPage?currentPage:1
-    return this.http.get(`${environment.apiURL}/user/o?per_page=${per_page}&current_page=${current_page}`)
+  public getAllOperator(paramStrng?:string): Observable<any> {
+    let per_page = 500
+    let current_page = 1
+    let str = paramStrng?paramStrng:'';
+    return this.http.get(`${environment.apiURL}/user/o?per_page=${per_page}&current_page=${current_page}&${str}`)
   }
 
 

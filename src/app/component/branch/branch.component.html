@@ -8,11 +8,16 @@
           <button class="shortcut-btn d-block w-100" data-toggle="modal" data-target="#addWaiter"><b>+ Add Branch</b></button>
         </div>
       </div>
-
+      <div class="offset-md-7 col-sm-12 col-md-2 cus-srch">
+        <div class="form-group">
+          SEARCH BY BRANCH
+         <input type="text" class="form-control pl-0" id="birthday" placeholder="Search By Branch" [(ngModel)]="bname" name="bname">
+       </div>
+      </div> 
 
 
       <div class="col-sm-12">
-        <div class="table-responsive">
+        <div class="table-responsive scrollmenu">
           <table class="table details_table">
             <thead>
               <tr>
@@ -25,7 +30,7 @@
               </tr>
             </thead>
             <tbody *ngIf='branchList?.length; else elseBlock'>
-              <tr *ngFor='let item of branchList ; index as i;'>
+              <tr *ngFor="let item of branchList | filter: 'branch_name' : bname ; index as i;">
                 <td><B>{{item.branch_name | titlecase}}</B></td>
                 <td>{{item.branch_phone}}</td>
                 <td>{{item.branch_address}}</td>

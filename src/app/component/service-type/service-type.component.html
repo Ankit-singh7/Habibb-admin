@@ -9,6 +9,13 @@
                   Service Type</b></button>
             </div>
           </div>
+
+          <div class="offset-md-9 col-sm-12 col-md-3 cus-srch">
+            <div class="form-group">
+              SEARCH BY SERVICE TYPE
+             <input type="text" class="form-control pl-0" id="birthday" placeholder="Search By Service Type" [(ngModel)]="servt" name="servt">
+           </div>
+          </div> 
   
   
           <div class="col-sm-12">
@@ -23,7 +30,7 @@
                   </tr>
                 </thead>
                 <tbody *ngIf='ServiceTypeList?.length; else elseBlock'>
-                  <tr *ngFor='let item of ServiceTypeList; let i=index;'>
+                  <tr *ngFor="let item of ServiceTypeList | filter: 'name': servt; let i=index;">
                     <td><B>{{item.name}}</B></td>
 
                     <td>

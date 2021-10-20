@@ -21,11 +21,13 @@ export class ServiceComponent implements OnInit {
   public sortOrder = false;
   public fullName = localStorage.getItem('name')
   selectedServiceType;
+  serv = '';
 
 
   @ViewChild('closeEditModal3') closeEditModal: ElementRef;
   @ViewChild('closeAddModal') closeAddModal: ElementRef;
   serviceName: any;
+  used: any;
 
   constructor(
     private router: Router,
@@ -100,7 +102,8 @@ export class ServiceComponent implements OnInit {
     this.ui.loader.show()
     const data = {
      name: this.serviceName,
-     service_type_id: this.selectedServiceType
+     service_type_id: this.selectedServiceType,
+     mostly_used: this.used
      }
      this.ServiceList.push(data)
      this.itemService.addService(data).subscribe((res) => {

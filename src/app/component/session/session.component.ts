@@ -60,7 +60,7 @@ constructor(private router: Router,
 
 ngOnInit(): void {
   this.getSessionList()
-  this.getAllUsers()
+  this.getAllOperator()
   this.getTotalSales()
 }
 
@@ -76,15 +76,18 @@ editStatus(val){
 }
 
 
-getAllUsers() {
 
-  this.userService.getAllUsers(500,1).subscribe((res) => {
-    this.userNameList.push({fullName: 'ALL'})
-    let tempList = res.data.result.map((item) => ({
-       fullName: `${item.firstName} ${item.lastName}`
-    }))
-    this.userNameList.push(...tempList)
-    console.log(this.userNameList)
+
+getAllOperator = () => {
+  this.userService.getAllOperator().subscribe((res) => {
+    if(res.data) {
+      let tempArr = res.data.result.map((item) => ({
+        id: item.user_id,
+        name: `${item.f_name} ${item.l_name}`
+      }))
+      let obj = {id:'',name:'All'}
+      this.userNameList = [obj,...tempArr]
+     }
   })
 }
 
@@ -140,6 +143,15 @@ getSessionList(page?:number) {
            ...item
       }))
       this.totalPage = res.data.total
+      if(res.data?.result) {
+      
+        this.total = 0
+        for(let item of res.data.result) {
+           this.total = this.total + item.drawer_balance
+        }
+      } else {
+        this.total = 0;
+      }
     } 
     this.ui.loader.hide()
   },(err) => this.ui.loader.hide())
@@ -148,7 +160,7 @@ getSessionList(page?:number) {
 
 onOptionSelect(option, val) {
   if(option === 'user') {
-    if(val === 'ALL') {
+    if(val === 'All') {
       this.selectedUserName = ''
      } else {
        this.selectedUserName = val

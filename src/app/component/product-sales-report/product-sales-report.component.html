@@ -41,6 +41,12 @@
                   <button class="shortcut-btn w-100" (click)="onDateSelect()"><b>SEARCH</b></button>
                 </div>
               </div>
+              <div class="col-sm-12 col-md-3 cus-srch">
+                <div class="form-group">
+                  SEARCH BY PRODUCT
+                 <input type="text" class="form-control pl-0" id="birthday" placeholder="Search By Product" [(ngModel)]="prodS" name="prodS">
+               </div>
+              </div> 
               <!-- <div class="offset-md-1 col-sm-2 cus-srch">
                 <div class="form-group">
                   SELECT PER PAGE
@@ -64,7 +70,7 @@
                       </tr>
                     </thead>
                     <tbody *ngIf='reportList?.length; else elseBlock' style="width:100%">
-                      <tr *ngFor = "let item of reportList index as i;">
+                      <tr *ngFor = "let item of reportList | filter: 'product_name':prodS ">
                         <ng-container *ngIf="item.quantity > 0">
 
                             <td><B>{{item.product_name | titlecase}}</B></td>

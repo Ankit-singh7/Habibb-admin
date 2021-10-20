@@ -6,6 +6,8 @@ import { LoaderService } from 'src/app/service/loader/loader.service';
 import { UserService } from 'src/app/service/user/user.service';
 import swal from 'sweetalert2';
 declare var $;
+import { fromEvent } from 'rxjs';
+import { map, switchMap, filter, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-branch',
@@ -46,7 +48,9 @@ export class BranchComponent implements OnInit {
 
 
   @ViewChild('closeEditModal') closeEditModal: ElementRef;
+  @ViewChild('branchName') branchName: ElementRef;
   designation: any;
+  bname = '';
 
   constructor(private router: Router,
               private branchService: BranchService,
@@ -60,8 +64,20 @@ export class BranchComponent implements OnInit {
 
 
 
+  titleCase(string) {
+    var sentence = string.toLowerCase().split(" ");
+    for(var i = 0; i< sentence.length; i++){
+       sentence[i] = sentence[i][0].toUpperCase() + sentence[i].slice(1);
+    }
+   return sentence;
+ }
+
+
+
 
   getBranchList() {
+ 
+
     this.branchService.getBranchList().subscribe((res) => {
       if(res.data) {
         this.branchList = res.data
@@ -81,8 +97,14 @@ export class BranchComponent implements OnInit {
 
   public generateMin(){
      for(let i = 1; i<61;i++) {
-       let obj = {key:i}
-       this.minutes.push(obj)
+       if(i === 60) {
+
+         let obj = {key:'00'}
+         this.minutes.push(obj)
+       } else {
+        let obj = {key:i}
+        this.minutes.push(obj)
+       }
      }
   }
 

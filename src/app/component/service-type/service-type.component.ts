@@ -21,6 +21,7 @@ export class ServiceTypeComponent implements OnInit {
   public field: string;
   public sortOrder = false;
   public fullName = localStorage.getItem('name')
+  servt = '';
 
 
   @ViewChild('closeEditModal3') closeEditModal: ElementRef;

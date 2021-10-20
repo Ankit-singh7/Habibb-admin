@@ -21,6 +21,7 @@ export class BrandComponent implements OnInit {
   public field: string;
   public sortOrder = false;
   public fullName = localStorage.getItem('name')
+  brnd = '';
 
 
   @ViewChild('closeEditModal3') closeEditModal: ElementRef;

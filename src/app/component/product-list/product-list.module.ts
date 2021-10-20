@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { ProductListRoutingModule } from './product-list-routing.module';
 import { ProductListComponent } from './product-list.component';
 import { FormsModule } from '@angular/forms';
+import { FilterPipe } from '../shared/pipe/filter.pipe';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +13,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     ProductListRoutingModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ]
 })
 export class ProductListModule { }

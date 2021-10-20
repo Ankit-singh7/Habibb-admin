@@ -26,6 +26,8 @@ export class ProductListComponent implements OnInit {
   @ViewChild('closeEditModal3') closeEditModal: ElementRef;
   @ViewChild('closeAddModal') closeAddModal: ElementRef;
   productName: any;
+  used: any;
+  prod = '';
 
   constructor(
     private router: Router,
@@ -100,7 +102,8 @@ export class ProductListComponent implements OnInit {
     this.ui.loader.show()
     const data = {
      name: this.productName,
-     brand_id: this.selectedBrand
+     brand_id: this.selectedBrand,
+     mostly_used: this.used
      }
      this.productList.push(data)
      this.itemService.addProduct(data).subscribe((res) => {
