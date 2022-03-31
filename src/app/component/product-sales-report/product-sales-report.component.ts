@@ -8,6 +8,7 @@ import swal from 'sweetalert2';
 import { SalesService } from 'src/app/service/sales/sales.service';
 import { UserService } from 'src/app/service/user/user.service';
 import { BranchService } from 'src/app/service/branch/branch.service';
+import { BillingService } from 'src/app/service/billing/billing.service';
 
 @Component({
   selector: 'app-product-sales-report',
@@ -31,7 +32,8 @@ export class ProductSalesReportComponent implements OnInit {
   public branchList = [];
 
 
-selectedPerPage = 10;
+
+selectedPerPage = 10000000;
 currentpage: number = 1;
 totalPage: number;
 prodS = '';
@@ -46,6 +48,7 @@ prodS = '';
     private salesService: SalesService,
     private userService: UserService,
     private branchService: BranchService,
+    private billingService: BillingService,
     private ui: LoaderService ) { }
   
   ngOnInit(): void {
@@ -123,15 +126,22 @@ prodS = '';
         }
         }
     this.ui.loader.show()
-    this.salesService.getAllProductSalesReport(filterStr).subscribe((res) => {
+    this.billingService.getBillingList(this.selectedPerPage,this.currentpage,filterStr).subscribe((res) => {
       this.reportList = [];
       if(res?.data?.result) {
         let arr1 = JSON.parse(JSON.stringify(res.data.result))
-        let keyArr = arr1.map((i) => i.product_id)
-        console.log(keyArr)
+        // let keyArr = arr1.map((i) => i.product_id)
+        let reports = [];
+        for(let item of arr1) {
+          if(item.products.length>0) {
+            for(let product of item.products) {
+              reports.push(product)
+            }
+          }
+        }
        for(let i = 0; i< arr1.length;i++) {
         //  debugger
-         let tempArr = arr1.filter((item) => item.product_id === arr1[i].product_id)
+         let tempArr = reports.filter((item) => item?.product_id === reports[i]?.product_id)
          console.log(tempArr)
          if(tempArr.length>1) {
            let newObj = JSON.parse(JSON.stringify(tempArr[0]))

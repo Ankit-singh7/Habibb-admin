@@ -71,7 +71,7 @@
                     </thead>
                     <tbody *ngIf='reportList?.length; else elseBlock' style="width:100%">
                       <tr *ngFor = "let item of reportList | filter: 'product_name':prodS ">
-                        <ng-container *ngIf="item.quantity > 0">
+                        <ng-container *ngIf="item?.quantity > 0">
 
                             <td><B>{{item.product_name | titlecase}}</B></td>
                             <!-- <td>{{item.total_price}}</td> -->

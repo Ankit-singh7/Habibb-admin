@@ -217,6 +217,7 @@ export class BranchComponent implements OnInit {
          this.detail.endMin = tempEndArr[1]
          this.detail.endSlot = tempEndArr[2]
          console.log(tempStartArr)
+         console.log(tempEndArr)
        }
     })
   }

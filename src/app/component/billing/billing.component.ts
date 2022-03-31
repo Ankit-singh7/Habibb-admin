@@ -243,21 +243,21 @@ export class BillingComponent implements OnInit {
              date: moment(item.createdOn).format('YYYY-MM-DD'),
              ...item
         }))
+        this.total = (res.data.total).split('-')[0];
 
-        this.totalPage = res.data.total
-        if(res.data?.result) {
-      
-          this.total = 0
-          for(let item of res.data.result) {
-             this.total = this.total + item.total_price
-          }
-        } else {
-          this.total = 0;
+        
+        if(res.data.result.length>0) {
+        
+          this.totalPage = (res.data.total).split('-')[1];
+          console.log(this.totalPage)
         }
+      } else {
+        this.total = 0;
       } 
       this.ui.loader.hide()
     },(err) => this.ui.loader.hide())
   }
+  
 
 
   onOptionSelect(option, val) {
