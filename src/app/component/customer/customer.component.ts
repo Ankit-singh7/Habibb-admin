@@ -11,16 +11,18 @@ import { fromEvent } from 'rxjs';
 import { map, switchMap, filter, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { ModeService } from 'src/app/service/mode/mode.service';
 import { BranchService } from 'src/app/service/branch/branch.service';
-
+import * as XLSX from 'xlsx';
+import { jsPDF } from "jspdf";
+import html2canvas from 'html2canvas';
 
 
 
 @Component({
-  selector: 'app-billing',
-  templateUrl: './billing.component.html',
-  styleUrls: ['./billing.component.css']
+  selector: 'app-customer',
+  templateUrl: './customer.component.html',
+  styleUrls: ['./customer.component.css']
 })
-export class BillingComponent implements OnInit {
+export class CustomerComponent implements OnInit {
 
 
 
@@ -43,6 +45,7 @@ export class BillingComponent implements OnInit {
   
   @ViewChild('yourElement') yourElement: ElementRef;
   @ViewChild('yourNumber') yourNumber: ElementRef;
+  @ViewChild('table') table: ElementRef;
 
   public billList = [];
   public firstName: string;
@@ -66,7 +69,6 @@ export class BillingComponent implements OnInit {
   public customerList = [];
   public selectedOperator;
   public selectedEmployee;
-  
 
 
   selectedPerPage = 10;
@@ -111,9 +113,8 @@ export class BillingComponent implements OnInit {
            this.searchedName = data.toLowerCase()
            if(this.searchedName) {
 
-            this.getCustomerList()
-          }
-          
+             this.getCustomerList()
+           }
 
       });
 
@@ -123,7 +124,7 @@ export class BillingComponent implements OnInit {
       // .pipe(distinctUntilChanged())
       // .subscribe(data => {
       //      this.searchedNumber = data.toLowerCase()
-      //       this.getCustomerList()
+      //       this.getNumberList()
 
       // });
   }
@@ -249,6 +250,27 @@ export class BillingComponent implements OnInit {
              date: moment(item.createdOn).format('YYYY-MM-DD'),
              ...item
         }))
+
+        for (let item of this.billList) {
+          let product_name_array;
+          let service_name_array
+          if(item.products.length>0) {
+           product_name_array =  item.products.map((i) => {
+                                    return i.product_name
+                                 })
+           item.product_name = product_name_array.toString()
+          } else {
+            item.product_name = null
+          }
+
+          if(item.services.length>0) {
+            service_name_array =  item.services.map((i) => {
+                                     return i.service_name
+                                  })
+            item.service_name = service_name_array.toString()
+           } 
+
+        }
         this.total = (res.data.total).split('-')[0];
 
         
@@ -263,6 +285,41 @@ export class BillingComponent implements OnInit {
       this.ui.loader.hide()
     },(err) => this.ui.loader.hide())
   }
+
+
+
+
+  fireEvent()
+{
+  const ws: XLSX.WorkSheet=XLSX.utils.table_to_sheet(this.table.nativeElement);
+  const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+  let date = new Date()
+  /* save to file */
+  XLSX.writeFile(wb, `customer_list_${date}.xlsx`);
+  
+}
+
+
+convetToPDF() {
+  var data = document.getElementById('customer-list');
+  html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      var imgWidth = 208;
+      var pageHeight = 295;
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+      var heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png')
+      let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
+      var position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+      let date = new Date()
+      pdf.save(`customer_list_${date}.pdf`); // Generated PDF
+  });
+}
+
+
 
 
   getCustomerList() {
@@ -286,6 +343,32 @@ export class BillingComponent implements OnInit {
       } 
     })
   }
+
+
+
+  getNumberList() {
+    this.billService.getNumberList(this.searchedNumber).subscribe((res) => {
+      this.customerList = [];
+      if(res.data) {
+        this.billList = res.data.map((item) => ({
+             date: moment(item.createdOn).format('YYYY-MM-DD'),
+             ...item
+        }))
+        this.total = (res.data.total).split('-')[0];
+
+        
+        if(res.data.result.length>0) {
+        
+          this.totalPage = (res.data.total).split('-')[1];
+          console.log(this.totalPage)
+        }
+      } else {
+        this.total = 0;
+      } 
+      this.ui.loader.hide()
+    },(err) => this.ui.loader.hide())
+  }
+  
   
 
 

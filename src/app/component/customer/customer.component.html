@@ -113,6 +113,16 @@
                 </select>
                </div>
             </div> 
+            <div class="col-sm-3">
+              <div class="form-group mt-3">
+                <button class="shortcut-btn w-100" (click)="fireEvent()"><b>Export to Excel</b></button>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group mt-3">
+                <button class="shortcut-btn w-100" (click)="convetToPDF()"><b>Export to PDF</b></button>
+              </div>
+            </div>
 
        
 
@@ -120,16 +130,19 @@
                   
                   <div class="col-sm-12">
                  <div class="table-responsive scrollmenu">
-                  <table class="table details_table ">
+                  <table class="table details_table " id="customer-list" #table>
                     <thead>
                       <tr>
-                        <th scope="col">Bill ID</th>
-                        <th scope="col">Price <a href = 'javascript:void(0)' (click)="changeOrder('total_price')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.total_price" [class.fa-caret-up]="!sortFields.total_price"></i></a></th>
-                        <th scope="col">Payment Option <a href = 'javascript:void(0)' (click)="changeOrder('payment_mode')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.payment_mode" [class.fa-caret-up]="!sortFields.payment_mode"></i></a></th>
+                        <!-- <th scope="col">Bill ID</th> -->
                         <th scope="col">Customer <a href = 'javascript:void(0)' (click)="changeOrder('customer_name')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.customer_name" [class.fa-caret-up]="!sortFields.customer_name"></i></a></th>
                         <th scope="col">Phone</th>
+                        <th scope="col">Services Taken</th>
+                        <th scope="col">Product Purchased</th>
+                        <th scope="col">Price <a href = 'javascript:void(0)' (click)="changeOrder('total_price')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.total_price" [class.fa-caret-up]="!sortFields.total_price"></i></a></th>
+                        <!-- <th scope="col">Payment Option <a href = 'javascript:void(0)' (click)="changeOrder('payment_mode')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.payment_mode" [class.fa-caret-up]="!sortFields.payment_mode"></i></a></th> -->
                         <th scope="col">Alternative Phone</th>
                         <th scope="col">Address</th>
+                        <th scope="col">Branch</th>
                         <th scope="col">Bill Date </th>
                         <th scope="col">Created At</th>
                         <th scope="col">Bill By <a href = 'javascript:void(0)' (click)="changeOrder('user_name')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.user_name" [class.fa-caret-up]="!sortFields.user_name"></i></a></th>
@@ -139,13 +152,16 @@
                     </thead>
                     <tbody *ngIf='billList?.length; else elseBlock'>
                       <tr *ngFor = "let item of billList  |paginate: { itemsPerPage: selectedPerPage, currentPage: currentpage, totalItems: totalPage};  index as i;">
-                        <td><B>{{item.bill_id}}</B></td>
-                        <td>&#x20B9; {{item.total_price}}</td>
-                        <td>{{item.payment_mode}}</td>
+                        <!-- <td><B>{{item.bill_id}}</B></td> -->
                         <td>{{item.customer_name}}</td>
                         <td>{{item.customer_phone}}</td>
+                        <td><B>{{item.service_name}}</B></td>
+                        <td><B>{{item.product_name}}</B></td>
+                        <td>&#x20B9; {{item.total_price}}</td>
+                        <!-- <td>{{item.payment_mode}}</td> -->
                         <td>{{item.customer_alternative_phone}}</td>
                         <td>{{item.customer_address}}</td>
+                        <td>{{item.branch_name}}</td>
                         <td>{{item.createdOn | date:'MMM d, y'}}</td>
                         <td>{{item.createdOn | date:'h:mm:ss a'}}</td>
                         <td>{{item.user_name}}</td>

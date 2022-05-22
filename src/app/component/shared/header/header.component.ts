@@ -84,6 +84,9 @@ export class HeaderComponent {
          if(this.activatedRoute === '/user/appointment-list') {
           this.title = 'APPOINTMENT LIST'
          }
+         if(this.activatedRoute === '/user/customer') {
+          this.title = 'CUSTOMER WISE SERVICES'
+         }
       }
     })
   }
