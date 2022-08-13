@@ -87,6 +87,9 @@ export class HeaderComponent {
          if(this.activatedRoute === '/user/customer') {
           this.title = 'CUSTOMER WISE SERVICES'
          }
+         if(this.activatedRoute === '/user/employee-sales') {
+          this.title = 'Employee Wise Sales'
+         }
       }
     })
   }

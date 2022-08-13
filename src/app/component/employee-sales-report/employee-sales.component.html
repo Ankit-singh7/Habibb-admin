@@ -1,0 +1,218 @@
+
+    <!-- Page Content  -->
+
+
+      <div class="container-fluid">
+        <div class="row dash-tab">
+          <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+               <h4>TOTAL SALES : &#x20B9; <span style="color:#69d73d">{{total}}</span></h4>
+            </div>
+          </div>
+          <div class="col-sm-2 cus-srch ">
+            <div class="form-group">
+              PAYMENT OPTION
+              <select name="pay" class="form-control pl-0" id="pay" [(ngModel)]="selectedPaymentMode" (change)="onOptionSelect('payment',$event.target.value)">
+                <ng-container *ngFor="let item of payment">
+                  <option [value]="item.id">{{item.name}}</option>
+                </ng-container>
+              </select>
+             </div>
+          </div> 
+          <div class="col-sm-2 cus-srch ">
+            <div class="form-group">
+              BRANCH WISE
+              <select name="dev" class="form-control pl-0" id="dev" [(ngModel)]="selectedBranchId" (change)="onOptionSelect('branch',$event.target.value)">
+                <ng-container *ngFor="let item of branchList">
+                  <option [value]="item.id">{{item.name}}</option>
+                </ng-container>
+              </select>
+             </div>
+          </div> 
+          <div class="col-sm-2 cus-srch ">
+            <div class="form-group">
+              EMPLOYEE WISE
+              <select name="cars" class="form-control pl-0" id="cars" [(ngModel)]="selectedEmployee" (change)="onOptionSelect('employee',$event.target.value)">
+                <ng-container *ngFor="let item of employeeList">
+                  <option [value]="item.id">{{item.name}}</option>
+                </ng-container>
+              </select>
+             </div>
+          </div>
+          <div class="col-sm-2 cus-srch ">
+            <div class="form-group">
+              BILL BY
+              <select name="cars" class="form-control pl-0" id="cars" [(ngModel)]="selectedOperator" (change)="onOptionSelect('operator',$event.target.value)">
+                <ng-container *ngFor="let item of operatorList">
+                  <option [value]="item.id">{{item.name}}</option>
+                </ng-container>
+              </select>
+             </div>
+          </div> 
+          <!-- <div class="col-sm-2 cus-srch">
+            <div class="form-group">
+               SEARCH BY NO.
+              <input type="text" #yourNumber class="form-control pl-0" id="birthday" placeholder="Search By Cus No." [(ngModel)]="searchedNumber" name="searchName" (keyup)="onCustomerChange()">
+            </div>
+          </div>   -->
+          <div class="col-sm-3 cus-srch">
+            <div class="form-group">
+               FROM DATE
+              <input type="date" class="form-control pl-0" id="birthday1" placeholder="From Date" [(ngModel)]="selectedStartDate" name="selectedSDate" (change)="changedDate('start',$event.target.value)">
+              
+            </div>
+          </div> 
+        <div class="col-sm-3 cus-srch">
+          <div class="form-group">
+             TO DATE
+            <input type="date" class="form-control pl-0" id="birthday2" placeholder="To Date" [(ngModel)]="selectedEndDate" name="selectedEDate" (change)="changedDate('end',$event.target.value)">
+            
+          </div>
+        </div> 
+        <div class="col-sm-3">
+            <div class="form-group mt-3">
+              <button class="shortcut-btn w-100" (click)="onDateSelect()"><b>SEARCH</b></button>
+            </div>
+          </div>
+     
+            <!-- <div class="col-sm-3 cus-srch">
+              <div class="form-group">
+                 SEARCH BY DATE
+                <input type="date" class="form-control pl-0" id="birthday" placeholder="select Date" [(ngModel)]="selectedDate" name="selectedDate" (change)="onOptionSelect('date',$event.target.value)">
+                
+              </div>
+            </div> 
+            <div class="col-sm-3 cus-srch">
+              <div class="form-group">
+                 SEARCH BY DATE
+                <input type="date" class="form-control pl-0" id="birthday" placeholder="select Date" [(ngModel)]="selectedDate" name="selectedDate" (change)="onOptionSelect('date',$event.target.value)">
+                
+              </div>
+            </div> 
+            <div class="col-sm-3">
+              <div class="form-group">
+                <button class="shortcut-btn d-block w-100" data-toggle="modal" data-target="#addWaiter"><b>SEARCH</b></button>
+              </div>
+            </div> -->
+            <!-- <div class="col-sm-12 col-md-3 ">
+              <div class="form-group">
+                SELECT PER PAGE
+                <select name="pay" class="form-control pl-0" id="pay" [(ngModel)]="selectedPerPage" (change)="onLimitSelect($event.target.value)">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                  <option value="10000">Show All</option>
+                </select>
+               </div>
+            </div>  -->
+
+       
+
+            
+                  
+                  <div class="col-sm-12">
+                 <div class="table-responsive scrollmenu">
+                  <table class="table details_table ">
+                    <thead>
+                      <tr>
+                        <th scope="col">Employee Name</th>
+                        <th scope="col">Service Completed</th>
+                        <th scope="col">Service Sale (&#x20B9;)</th>
+                        <th scope="col">Service Name</th>
+                        <th scope="col">Product Sold</th>
+                        <th scope="col">Product Sale (&#x20B9;)</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Total Sale</th>
+                        <!-- <th scope="col">View</th>
+                        <th scope="col">Action</th> -->
+                      </tr>
+                    </thead>
+                    <tbody *ngIf='billList?.length; else elseBlock'>
+                      <tr *ngFor = "let item of billList  |paginate: { itemsPerPage: selectedPerPage, currentPage: currentpage, totalItems: totalPage};  index as i;">
+                        <td><B>{{item.employee_name}}</B></td>
+                        <td>{{item.service_quantity}}</td>
+                        <td>&#x20B9; {{item.s_price}}</td>
+                        <td>{{item.s_name}}</td>
+                        <td>{{item.product_quantity}}</td>
+                        <td>&#x20B9; {{item.p_price}}</td>
+                        <td>{{item.p_name}}</td>
+                        <td>{{item.total_price}}</td>
+                      </tr>
+                     </tbody>
+                      <ng-template #elseBlock>
+                        <tbody>
+                          <tr>
+                            <td class="text-center" colspan="100%">{{response}}</td>
+                          </tr>
+                        </tbody>
+                      </ng-template>
+                  </table>
+                  <pagination-controls (pageChange)="getBillList($event)" style="text-align: center;"></pagination-controls>
+                </div>
+                </div>
+                
+          
+        </div>
+      </div>
+
+
+
+
+<!-- Edit Employee Modal -->
+    <div id="viewModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" #viewModal>
+      <div class="modal-dialog">
+        <div class="modal-content" style="padding:2%" *ngIf="detail">
+            <div class="row">
+              <div class="col-6">
+                <h5>Billing Detail</h5>
+              </div>
+              <div class="col-sm-6">
+                <p>Date: <span style="font-weight: bold;">{{detail.date}}</span></p>
+               </div> 
+              <div class="col-sm-6">
+               <p>Name: <span style="font-weight: bold;">{{detail.customer_name?detail.customer_name:'Not Mentioned'}}</span></p>
+              </div> 
+              <div class="col-sm-6">
+                <p>Bill ID: <span style="font-weight: bold;">{{detail.bill_id?detail.bill_id:'Not Mentioned'}}</span></p>
+               </div>   
+              <div class="col-sm-6">
+                <p>Phone No: <span style="font-weight: bold;">{{detail.customer_alternative_phone?detail.customer_alternative_phone:'Not Mentioned'}}</span></p>
+               </div>  
+               <div class="col-sm-6">
+                <p>Whatsapp No: <span style="font-weight: bold;">{{detail.customer_phone?detail.customer_phone:'Not Mentioned'}}</span></p>
+               </div>
+               <div class="col-sm-12">
+                <p>Address: <span style="font-weight: bold;">{{detail.customer_address?detail.customer_address:'Not Mentioned'}}</span></p>
+               </div>
+               <div class="col-sm-6">
+                <p>Delivery Mode: <span style="font-weight: bold;">{{detail.delivery_mode?detail.delivery_mode:'Not Mentioned'}}</span></p>
+               </div>
+               <div class="col-sm-6">
+                <p>Payment Mode: <span style="font-weight: bold;">{{detail.payment_mode?detail.payment_mode:'Not Mentioned'}}</span></p>
+               </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                 <h5 style="text-align:center">Purchase Detail</h5>
+              </div>
+              <ng-container *ngFor="let item of detail.products">
+               <div class="col-sm-6" style="border: 1px solid gray;padding:5px;">
+                 <p>Product Name:  <span style="font-weight: bold;">{{item.product_name| titlecase}}</span></p>
+                 <p>Total:  <span style="font-weight: bold;">{{item.total}}</span></p>
+                 <p>Employee Name:  <span style="font-weight: bold;">{{item.employee_name}}</span></p>
+               </div>
+              </ng-container>
+              <ng-container *ngFor="let item of detail.services">
+                <div class="col-sm-6"  style="border: 1px solid gray;padding:5px;">
+                  <p>Service Name:  <span style="font-weight: bold;">{{item.service_name| titlecase}}</span></p>
+                  <p>Total:  <span style="font-weight: bold;">{{item.total}}</span></p>
+                  <p>Employee Name:  <span style="font-weight: bold;">{{item.employee_name}}</span></p>
+                </div>
+               </ng-container>
+            </div>
+        </div>
+      </div>
+
+
+  
