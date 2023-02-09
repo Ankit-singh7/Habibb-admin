@@ -24,7 +24,8 @@ public sortFields = {
   user_name:true,
   session_amount: true,
   drawer_balance:true,
-  withdrawn: true
+  withdrawn: true,
+  closing_balance: true
 };
 
 public fullName = localStorage.getItem('name')

@@ -39,7 +39,7 @@
               </select>
              </div>
           </div>
-          <div class="col-sm-2 cus-srch ">
+          <div class="offset-sm-2 col-sm-2 cus-srch ">
             <div class="form-group">
               BILL BY
               <select name="cars" class="form-control pl-0" id="cars" [(ngModel)]="selectedOperator" (change)="onOptionSelect('operator',$event.target.value)">
@@ -117,13 +117,13 @@
                     <thead>
                       <tr>
                         <th scope="col">Employee Name</th>
+                        <th scope="col">Total Sale</th>
                         <th scope="col">Service Completed</th>
                         <th scope="col">Service Sale (&#x20B9;)</th>
                         <th scope="col">Service Name</th>
                         <th scope="col">Product Sold</th>
                         <th scope="col">Product Sale (&#x20B9;)</th>
                         <th scope="col">Product Name</th>
-                        <th scope="col">Total Sale</th>
                         <!-- <th scope="col">View</th>
                         <th scope="col">Action</th> -->
                       </tr>
@@ -131,13 +131,13 @@
                     <tbody *ngIf='billList?.length; else elseBlock'>
                       <tr *ngFor = "let item of billList  |paginate: { itemsPerPage: selectedPerPage, currentPage: currentpage, totalItems: totalPage};  index as i;">
                         <td><B>{{item.employee_name}}</B></td>
+                        <td>&#x20B9; {{item.total_price}}</td>
                         <td>{{item.service_quantity}}</td>
-                        <td>&#x20B9; {{item.s_price}}</td>
+                        <td>&#x20B9; ({{item.s_price}})</td>
                         <td>{{item.s_name}}</td>
                         <td>{{item.product_quantity}}</td>
-                        <td>&#x20B9; {{item.p_price}}</td>
+                        <td>&#x20B9; ({{item.p_price}})</td>
                         <td>{{item.p_name}}</td>
-                        <td>{{item.total_price}}</td>
                       </tr>
                      </tbody>
                       <ng-template #elseBlock>

@@ -46,7 +46,8 @@
                         <th scope="col">Date</th>
                         <th scope="col">User Name <a href = 'javascript:void(0)' (click)="changeOrder('user_name')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.user_name" [class.fa-caret-up]="!sortFields.user_name"></i></a></th>
                         <th scope="col">Open Balance <a href = 'javascript:void(0)' (click)="changeOrder('session_amount')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.session_amount" [class.fa-caret-up]="!sortFields.session_amount"></i></a></th>
-                        <th scope="col">Closing Balance <a href = 'javascript:void(0)' (click)="changeOrder('drawer_balance')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.drawer_balance" [class.fa-caret-up]="!sortFields.drawer_balance"></i></a></th>
+                        <th scope="col">Drawer Balance <a href = 'javascript:void(0)' (click)="changeOrder('drawer_balance')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.drawer_balance" [class.fa-caret-up]="!sortFields.drawer_balance"></i></a></th>
+                        <th scope="col">Closing Balance <a href = 'javascript:void(0)' (click)="changeOrder('closing_balance')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.closing_balance" [class.fa-caret-up]="!sortFields.closing_balance"></i></a></th>
                         <th scope="col">Withraw <a href = 'javascript:void(0)' (click)="changeOrder('withdrawn')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.withdrawn" [class.fa-caret-up]="!sortFields.withdrawn"></i></a></th>
                       </tr>
                     </thead>
@@ -57,6 +58,7 @@
                         <td>{{item.user_name}}</td>
                         <td>&#x20B9; {{item.session_amount}}</td>
                         <td>&#x20B9; {{item.drawer_balance}}</td>
+                        <td>&#x20B9; {{item.closing_balance?item.closing_balance:'0'}}</td>
                         <td>&#x20B9; {{item.withdrawn}}</td>
                       </tr>
                      </tbody>

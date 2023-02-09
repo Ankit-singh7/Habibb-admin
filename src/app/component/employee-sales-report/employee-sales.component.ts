@@ -316,12 +316,12 @@ export class EmployeeSalesComponent implements OnInit {
             if(items[itemIndex].service_quantity && item.type === 'service') {
                items[itemIndex].total_price += item.price
                items[itemIndex].service_quantity +=  item.quantity
-               items[itemIndex].s_price += item.price
+               items[itemIndex].s_price = `${items[itemIndex].s_price} + ${item.price}`
                items[itemIndex].s_name = `${items[itemIndex].s_name},${item.s_name}`
             } else if(items[itemIndex].product_quantity && item.type === 'product') {
               items[itemIndex].total_price += item.price
               items[itemIndex].product_quantity +=  item.quantity
-              items[itemIndex].p_price += item.price
+              items[itemIndex].p_price = `${items[itemIndex].p_price} + ${item.price}`
               items[itemIndex].p_name = `${items[itemIndex].p_name},${item.p_name}`
             } else if(!items[itemIndex].service_quantity && item.type === 'service') {
               items[itemIndex].total_price += item.price
