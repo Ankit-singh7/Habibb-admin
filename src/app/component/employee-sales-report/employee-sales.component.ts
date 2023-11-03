@@ -240,7 +240,6 @@ export class EmployeeSalesComponent implements OnInit {
           filterStr = `${filterStr}${item}=${data[item]}&`
         }
         }
-     console.log(filterStr)
     this.ui.loader.show()
     this.billService.getBillingList(this.selectedPerPage,this.currentpage,filterStr).subscribe((res) => {
       this.billList = [];
@@ -285,7 +284,6 @@ export class EmployeeSalesComponent implements OnInit {
           }
         }
 
-        console.log('updated list',updatedArray)
         let temp_array = JSON.parse(JSON.stringify(updatedArray))
         this.billList = temp_array.reduce((items,item)=> {
           let itemIndex = items.findIndex((i) => i.employee_name === item.employee_name)
@@ -339,8 +337,10 @@ export class EmployeeSalesComponent implements OnInit {
           return items;
 
         },[])
-        this.total = (res.data.total).split('-')[0];
-        console.log(this.billList)
+        console.log('bill', this.billList)
+        this.total = this.billList.reduce((acc,curr) => {
+            return acc + curr.total_price;
+        },0)
         
         if(res.data.result.length>0) {
         
