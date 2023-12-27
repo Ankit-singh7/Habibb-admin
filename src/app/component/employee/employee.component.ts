@@ -78,10 +78,13 @@ export class EmployeeComponent implements OnInit {
 
 
   getEmployeesList(page?:number) {
-
+     
     this.ui.loader.show()
 
+    if(page) {
 
+      this.currentpage = page
+    }
     let data = {
       f_name:  this.firstName
      
@@ -93,7 +96,7 @@ export class EmployeeComponent implements OnInit {
         }
         }
      console.log(filterStr)
-    this.userService.getAllEmployee(filterStr).subscribe((res) => {
+    this.userService.getAllEmployee(filterStr, this.selectedPerPage, this.currentpage).subscribe((res) => {
       if(res.data) {
         this.employeeList = res.data.result
         this.total = res.data.total

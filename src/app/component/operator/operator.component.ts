@@ -94,6 +94,12 @@ export class OperatorComponent implements OnInit {
   getOperatorList(page?:number) {
     this.ui.loader.show()
 
+
+    if(page) {
+
+      this.currentpage = page
+    }
+
     let data = {
       f_name:  this.firstName
      
@@ -105,7 +111,7 @@ export class OperatorComponent implements OnInit {
         }
         }
      console.log(filterStr)
-    this.userService.getAllOperator(filterStr).subscribe((res) => {
+    this.userService.getAllOperator(filterStr, this.selectedPerPage, this.currentpage).subscribe((res) => {
       if(res.data) {
         this.operatorList = res.data.result
         this.total = res.data.total
