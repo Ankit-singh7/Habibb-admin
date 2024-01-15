@@ -21,7 +21,7 @@ export class ProductSalesReportComponent implements OnInit {
   public sortOrder = false;
   public sortFields = {
     quantity:true,
-    food_name:true,
+    product_name:true,
   };
   public reportList = [];
   public response = 'No Data to Show';
@@ -30,6 +30,12 @@ export class ProductSalesReportComponent implements OnInit {
   public total: any;
   public employeeList = [];
   public branchList = [];
+  public yearWiseReportList = [];
+  selectedTab = 'custom';
+  selectedYear = new Date().getFullYear();
+  public lastTenYears = Array.from({ length: 10 }, (_, index) => new Date().getFullYear() - index);
+ 
+
 
 
 
@@ -43,6 +49,7 @@ prodS = '';
   @ViewChild('closeEditModal') closeEditModal: ElementRef;
   selectedBranchId: any;
   selectedEmployee: string;
+  selectedMonth = 1;
   
   constructor(private router: Router,
     private salesService: SalesService,
@@ -55,6 +62,15 @@ prodS = '';
      this.getAllReport()
      this.getAllBranch()
      this.getAllEmployee()
+     this.getYearWiseSalesReport(this.selectedYear);
+  }
+
+  toggleTab(val) {
+    this.selectedTab = val;
+  }
+
+  toggleMonth(val) {
+    this.selectedMonth = val;
   }
 
 
@@ -101,7 +117,10 @@ prodS = '';
        } else {
          this.selectedEmployee = val
        }
-    } 
+    } else if (option === 'year') {
+      this.selectedYear = val;
+      this.getYearWiseSalesReport(this.selectedYear);
+    }
     this.getAllReport()
   }
   
@@ -151,7 +170,6 @@ prodS = '';
            }
            newObj.quantity = quantity;
            if(!this.reportList.some(item => item.product_id === newObj.product_id )) {
-
              this.reportList.push(Object.assign({}, newObj))
            } 
          } else {
@@ -226,8 +244,40 @@ prodS = '';
     } else if(date === 'end') {
       this.selectedEndDate = val
     }
-    console.log(this.selectedStartDate)
-    console.log(this.selectedEndDate)
+  }
+
+  getYearWiseSalesReport(year){
+    this.salesService.getYearWiseSalesReport(year).subscribe((res) => {
+      this.yearWiseReportList = [];
+      const tempData = res;
+      if(res?.data) {
+        let month = 1;
+        for(let item of res?.data) {
+          let productList = JSON.parse(JSON.stringify(item.result))
+          const combinedProducts = {};
+
+          productList.forEach(product => {
+              const productId = product.product_id;
+              const productQuantity = product.quantity || 0;
+      
+              if (combinedProducts[productId]) {
+                  combinedProducts[productId].quantity += productQuantity;
+              } else {
+                  combinedProducts[productId] = {
+                      product_id: productId,
+                      product_name: product.product_name,
+                      quantity: productQuantity
+                  };
+              }
+          });
+      
+          const resultArray = Object.values(combinedProducts);
+          this.yearWiseReportList.push({month: month, result: resultArray})
+             month++;
+        }
+        console.log(this.yearWiseReportList)
+      }
+    })
   }
   
     
