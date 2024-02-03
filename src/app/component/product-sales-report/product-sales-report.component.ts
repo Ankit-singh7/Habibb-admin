@@ -246,7 +246,7 @@ export class ProductSalesReportComponent implements OnInit {
       }
     }
     this.ui.loader.show();
-    this.salesService.getYearWiseSalesReport(year, filterStr).subscribe((res) => {
+    this.salesService.getProductYearWiseSalesReport(year, filterStr).subscribe((res) => {
       this.yearWiseReportList = [];
       const tempData = res;
       if (res?.data) {

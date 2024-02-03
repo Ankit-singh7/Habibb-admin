@@ -1,97 +1,217 @@
 
 
       <div class="container-fluid">
-        <div class="row dash-tab">
-            <div class="col-sm-5 cus-srch ">
-                <div class="form-group">
-                  BRANCH WISE
-                  <select name="dev" class="form-control pl-0" id="dev" [(ngModel)]="selectedBranchId" (change)="onOptionSelect('branch',$event.target.value)">
-                    <ng-container *ngFor="let item of branchList">
-                      <option [value]="item.id">{{item.name}}</option>
-                    </ng-container>
-                  </select>
-                 </div>
-              </div> 
-              <div class="col-sm-5 cus-srch ">
-                <div class="form-group">
-                  EMPLOYEE WISE
-                  <select name="cars" class="form-control pl-0" id="cars" [(ngModel)]="selectedEmployee" (change)="onOptionSelect('employee',$event.target.value)">
-                    <ng-container *ngFor="let item of employeeList">
-                      <option [value]="item.id">{{item.name}}</option>
-                    </ng-container>
-                  </select>
-                 </div>
-              </div>
-            <div class="col-sm-3 cus-srch">
-                <div class="form-group">
-                   FROM DATE
-                  <input type="date" class="form-control pl-0" id="birthday1" placeholder="From Date" [(ngModel)]="selectedStartDate" name="selectedSDate" (change)="changedDate('start',$event.target.value)">
-                  
-                </div>
-              </div> 
-            <div class="col-sm-3 cus-srch">
-              <div class="form-group">
-                 TO DATE
-                <input type="date" class="form-control pl-0" id="birthday2" placeholder="To Date" [(ngModel)]="selectedEndDate" name="selectedEDate" (change)="changedDate('end',$event.target.value)">
-                
-              </div>
-            </div> 
-            <div class="col-sm-3">
-                <div class="form-group mt-3">
-                  <button class="shortcut-btn w-100" (click)="onDateSelect()"><b>SEARCH</b></button>
-                </div>
-              </div>
-              <div class="col-sm-12 col-md-3 cus-srch">
-                <div class="form-group">
-                  SEARCH BY SERVICE
-                 <input type="text" class="form-control pl-0" id="birthday" placeholder="Search By SERVICE" [(ngModel)]="servS" name="servS">
-               </div>
-              </div> 
-              <!-- <div class="offset-md-1 col-sm-2 cus-srch">
-                <div class="form-group">
-                  SELECT PER PAGE
-                  <select name="pay" class="form-control pl-0" id="pay" [(ngModel)]="selectedPerPage" (change)="onLimitSelect($event.target.value)">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                  </select>
-                 </div>
-              </div>  -->
-            
-                  
-                  <div class="col-sm-12">
-                 <div class="table-responsive">
-                  <table class="table details_table ">
-                    <thead>
-                      <tr>
-                        <th scope="col">Service Name<a href = 'javascript:void(0)' (click)="changeOrder('food_name')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.food_name" [class.fa-caret-up]="!sortFields.food_name"></i></a></th>
-                        <th scope="col">Head Count<a href = 'javascript:void(0)' (click)="changeOrder('quantity')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.quantity" [class.fa-caret-up]="!sortFields.quantity"></i></a></th>
-                      </tr>
-                    </thead>
-                    <tbody *ngIf='reportList?.length; else elseBlock' style="width:100%">
-                      <tr *ngFor = "let item of reportList | filter : 'service_name': servS;">
-                        <ng-container *ngIf="item?.quantity > 0">
-
-                            <td><B>{{item?.service_name | titlecase}}</B></td>
-                            <!-- <td>{{item.total_price}}</td> -->
-                            <td>{{item?.quantity}}</td>
+        <ul class="nav nav-fill nav-tabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" [class.active]="selectedTab === 'custom'"  role="tab"  (click)="toggleTab('custom')"> Custom Dates</a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" [class.active]="selectedTab === 'yearly'"  role="tab" (click)="toggleTab('yearly')"> Yearly </a>
+          </li>
+        </ul>
+        <div class="tab-content pt-5" id="tab-content">
+          <ng-container *ngIf="selectedTab === 'custom'">
+            <div class="tab-pane" [class.active]="selectedTab === 'custom'" role="tabpanel">
+              <div class="row dash-tab">
+                <div class="col-sm-5 cus-srch ">
+                    <div class="form-group">
+                      BRANCH WISE
+                      <select name="dev" class="form-control pl-0" id="dev" [(ngModel)]="selectedBranchId" (change)="onOptionSelect('branch',$event.target.value)">
+                        <ng-container *ngFor="let item of branchList">
+                          <option [value]="item.id">{{item.name}}</option>
                         </ng-container>
-                      </tr>
-                     </tbody>
-                      <ng-template #elseBlock>
-                        <tbody>
+                      </select>
+                     </div>
+                  </div> 
+                  <div class="col-sm-5 cus-srch ">
+                    <div class="form-group">
+                      EMPLOYEE WISE
+                      <select name="cars" class="form-control pl-0" id="cars" [(ngModel)]="selectedEmployee" (change)="onOptionSelect('employee',$event.target.value)">
+                        <ng-container *ngFor="let item of employeeList">
+                          <option [value]="item.id">{{item.name}}</option>
+                        </ng-container>
+                      </select>
+                     </div>
+                  </div>
+                <div class="col-sm-3 cus-srch">
+                    <div class="form-group">
+                       FROM DATE
+                      <input type="date" class="form-control pl-0" id="birthday1" placeholder="From Date" [(ngModel)]="selectedStartDate" name="selectedSDate" (change)="changedDate('start',$event.target.value)">
+                      
+                    </div>
+                  </div> 
+                <div class="col-sm-3 cus-srch">
+                  <div class="form-group">
+                     TO DATE
+                    <input type="date" class="form-control pl-0" id="birthday2" placeholder="To Date" [(ngModel)]="selectedEndDate" name="selectedEDate" (change)="changedDate('end',$event.target.value)">
+                    
+                  </div>
+                </div> 
+                <div class="col-sm-3">
+                    <div class="form-group mt-3">
+                      <button class="shortcut-btn w-100" (click)="onDateSelect()"><b>SEARCH</b></button>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-3 cus-srch">
+                    <div class="form-group">
+                      SEARCH BY SERVICE
+                     <input type="text" class="form-control pl-0" id="birthday" placeholder="Search By Service" [(ngModel)]="servSC" name="servSC">
+                   </div>
+                  </div> 
+                      
+                      <div class="col-sm-12">
+                     <div class="table-responsive">
+                      <table class="table details_table ">
+                        <thead>
                           <tr>
-                            <td class="text-center" colspan="100%">{{response}}</td>
+                            <th scope="col">Service Name<a href = 'javascript:void(0)' (click)="changeOrder('service_name')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.service_name" [class.fa-caret-up]="!sortFields.service_name"></i></a></th>
+                            <th scope="col">Quantity Sold<a href = 'javascript:void(0)' (click)="changeOrder('quantity')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.quantity" [class.fa-caret-up]="!sortFields.quantity"></i></a></th>
                           </tr>
-                        </tbody>
-                      </ng-template>
-                  </table>
-                  <!-- <pagination-controls (pageChange)="getAllReport($event)" style="text-align: center;"></pagination-controls> -->
+                        </thead>
+                        <tbody *ngIf='reportList?.length; else elseBlock' style="width:100%">
+                          <tr *ngFor = "let item of reportList | filter: 'service_name': servSC">
+                            <ng-container *ngIf="item?.quantity > 0">
+    
+                                <td><B>{{item.service_name | titlecase}}</B></td>
+                                <!-- <td>{{item.total_price}}</td> -->
+                                <td>{{item.quantity}}</td>
+                            </ng-container>
+                          </tr>
+                         </tbody>
+                          <ng-template #elseBlock>
+                            <tbody>
+                              <tr>
+                                <td class="text-center" colspan="100%">{{response}}</td>
+                              </tr>
+                            </tbody>
+                          </ng-template>
+                      </table>
+                      <!-- <pagination-controls (pageChange)="getAllReport($event)" style="text-align: center;"></pagination-controls> -->
+                    </div>
+                    </div>
+            </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="selectedTab === 'yearly'">
+            <div class="tab-pane" [class.active]="selectedTab === 'yearly'" role="tabpanel">
+              <ul class="nav nav-fill nav-tabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" [class.active]="selectedMonth === 1" role="tab" (click)="toggleMonth(1)"> JAN </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" [class.active]="selectedMonth === 2"  role="tab" (click)="toggleMonth(2)"> FEB </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" [class.active]="selectedMonth === 3" role="tab"  (click)="toggleMonth(3)"> MAR </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" [class.active]="selectedMonth === 4" role="tab"  (click)="toggleMonth(4)"> APR </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" [class.active]="selectedMonth === 5" role="tab"  (click)="toggleMonth(5)"> MAY </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" [class.active]="selectedMonth === 6" role="tab"  (click)="toggleMonth(6)"> JUN </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" [class.active]="selectedMonth === 7" role="tab"  (click)="toggleMonth(7)"> JUL </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" [class.active]="selectedMonth === 8" role="tab"  (click)="toggleMonth(8)"> AUG </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" [class.active]="selectedMonth === 9" role="tab"  (click)="toggleMonth(9)"> SEP </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" [class.active]="selectedMonth === 10" role="tab"  (click)="toggleMonth(10)"> OCT </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" [class.active]="selectedMonth === 11" role="tab"  (click)="toggleMonth(11)"> NOV </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" [class.active]="selectedMonth === 12" role="tab"  (click)="toggleMonth(12)"> DEC </a>
+                </li>
+              </ul>
+              <div class="tab-content pt-5" id="tab-content" *ngIf="yearWiseReportList">
+                <div class="row">
+
+                  <div class="col-sm-12 col-md-3  cus-srch ">
+                      <div class="form-group">
+                        BRANCH WISE
+                        <select name="dev" class="form-control pl-0" id="dev" [(ngModel)]="selectedBranchId" (change)="onYearOptionSelect('branch',$event.target.value)">
+                          <ng-container *ngFor="let item of branchList">
+                            <option [value]="item.id">{{item.name}}</option>
+                          </ng-container>
+                        </select>
+                       </div>
+                    </div> 
+                    <div class="col-sm-12 col-md-3 cus-srch ">
+                      <div class="form-group">
+                        EMPLOYEE WISE
+                        <select name="cars" class="form-control pl-0" id="cars" [(ngModel)]="selectedEmployee" (change)="onYearOptionSelect('employee',$event.target.value)">
+                          <ng-container *ngFor="let item of employeeList">
+                            <option [value]="item.id">{{item.name}}</option>
+                          </ng-container>
+                        </select>
+                       </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3 cus-srch">
+                      <div class="form-group">
+                        SEARCH BY SERVICE
+                       <input type="text" class="form-control pl-0" id="birthday" placeholder="Search By Service" [(ngModel)]="servSY" name="servSY">
+                     </div>
+                    </div>  
+                    <div class="col-sm-12 col-md-3 cus-srch ">
+                      <div class="form-group">
+                        SELECT YEAR
+                        <select name="year" class="form-control pl-0" id="year" [(ngModel)]="selectedYear" (change)="onOptionSelect('year',$event.target.value)">
+                          <ng-container *ngFor="let item of lastTenYears">
+                            <option [value]="item">{{item}}</option>
+                          </ng-container>
+                        </select>
+                       </div>
+                    </div> 
                 </div>
+                <ng-container *ngFor="let monthData of yearWiseReportList">
+                   <!-- Table -->
+                   <div class="tab-pane active" [class.active]="selectedMonth === monthData.month" role="tabpanel">
+                  <div class="row dash-tab">
+                          <div class="col-sm-12">
+                         <div class="table-responsive">
+                          <table class="table details_table ">
+                            <thead>
+                              <tr>
+                                <th scope="col">Service Name<a href = 'javascript:void(0)' (click)="changeOrder('service_name')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.service_name" [class.fa-caret-up]="!sortFields.service_name"></i></a></th>
+                                <th scope="col">Quantity Sold<a href = 'javascript:void(0)' (click)="changeOrder('quantity')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.quantity" [class.fa-caret-up]="!sortFields.quantity"></i></a></th>
+                              </tr>
+                            </thead>
+                            <tbody *ngIf='monthData?.result.length; else elseBlock' style="width:100%">
+                              <tr *ngFor = "let item of monthData.result | filter: 'service_name': servSY">
+                                <ng-container *ngIf="item?.quantity > 0">
+        
+                                    <td><B>{{item.service_name | titlecase}}</B></td>
+                                    <!-- <td>{{item.total_price}}</td> -->
+                                    <td>{{item.quantity}}</td>
+                                </ng-container>
+                              </tr>
+                             </tbody>
+                              <ng-template #elseBlock>
+                                <tbody>
+                                  <tr>
+                                    <td class="text-center" colspan="100%">Data Not Available</td>
+                                  </tr>
+                                </tbody>
+                              </ng-template>
+                          </table>
+                          <!-- <pagination-controls (pageChange)="getAllReport($event)" style="text-align: center;"></pagination-controls> -->
+                        </div>
+                        </div>
                 </div>
-                
-          
+              </div>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
         </div>
       </div>
 

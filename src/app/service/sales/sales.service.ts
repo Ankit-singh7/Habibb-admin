@@ -19,8 +19,13 @@ export class SalesService {
     return this.http.get(`${environment.apiURL}/service-sales-report/view/all?${paramObj}`)
   }
 
-  getYearWiseSalesReport = (year, paramObj?:any):Observable<any> => {
+  getProductYearWiseSalesReport = (year, paramObj?:any):Observable<any> => {
     return this.http.get(`${environment.apiURL}/product-sales-report/view/yearly-month-wise?year=${year}&${paramObj}`)
   }
+
+  getServiceYearWiseSalesReport = (year, paramObj?:any):Observable<any> => {
+    return this.http.get(`${environment.apiURL}/service-sales-report/view/yearly-month-wise?year=${year}&${paramObj}`)
+  }
+  
   
 }
