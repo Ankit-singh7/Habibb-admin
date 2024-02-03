@@ -55,21 +55,9 @@
                   <div class="col-sm-12 col-md-3 cus-srch">
                     <div class="form-group">
                       SEARCH BY PRODUCT
-                     <input type="text" class="form-control pl-0" id="birthday" placeholder="Search By Product" [(ngModel)]="prodS" name="prodS">
+                     <input type="text" class="form-control pl-0" id="birthday" placeholder="Search By Product" [(ngModel)]="prodSC" name="prodSC">
                    </div>
                   </div> 
-                  <!-- <div class="offset-md-1 col-sm-2 cus-srch">
-                    <div class="form-group">
-                      SELECT PER PAGE
-                      <select name="pay" class="form-control pl-0" id="pay" [(ngModel)]="selectedPerPage" (change)="onLimitSelect($event.target.value)">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                      </select>
-                     </div>
-                  </div>  -->
-                
                       
                       <div class="col-sm-12">
                      <div class="table-responsive">
@@ -81,7 +69,7 @@
                           </tr>
                         </thead>
                         <tbody *ngIf='reportList?.length; else elseBlock' style="width:100%">
-                          <tr *ngFor = "let item of reportList | filter: 'product_name': prodS">
+                          <tr *ngFor = "let item of reportList | filter: 'product_name': prodSC">
                             <ng-container *ngIf="item?.quantity > 0">
     
                                 <td><B>{{item.product_name | titlecase}}</B></td>
@@ -150,7 +138,7 @@
                   <div class="col-sm-12 col-md-3  cus-srch ">
                       <div class="form-group">
                         BRANCH WISE
-                        <select name="dev" class="form-control pl-0" id="dev" [(ngModel)]="selectedBranchId" (change)="onOptionSelect('branch',$event.target.value)">
+                        <select name="dev" class="form-control pl-0" id="dev" [(ngModel)]="selectedBranchId" (change)="onYearOptionSelect('branch',$event.target.value)">
                           <ng-container *ngFor="let item of branchList">
                             <option [value]="item.id">{{item.name}}</option>
                           </ng-container>
@@ -160,7 +148,7 @@
                     <div class="col-sm-12 col-md-3 cus-srch ">
                       <div class="form-group">
                         EMPLOYEE WISE
-                        <select name="cars" class="form-control pl-0" id="cars" [(ngModel)]="selectedEmployee" (change)="onOptionSelect('employee',$event.target.value)">
+                        <select name="cars" class="form-control pl-0" id="cars" [(ngModel)]="selectedEmployee" (change)="onYearOptionSelect('employee',$event.target.value)">
                           <ng-container *ngFor="let item of employeeList">
                             <option [value]="item.id">{{item.name}}</option>
                           </ng-container>
@@ -170,7 +158,7 @@
                     <div class="col-sm-12 col-md-3 cus-srch">
                       <div class="form-group">
                         SEARCH BY PRODUCT
-                       <input type="text" class="form-control pl-0" id="birthday" placeholder="Search By Product" [(ngModel)]="prodS" name="prodS">
+                       <input type="text" class="form-control pl-0" id="birthday" placeholder="Search By Product" [(ngModel)]="prodSY" name="prodSY">
                      </div>
                     </div>  
                     <div class="col-sm-12 col-md-3 cus-srch ">
@@ -198,7 +186,7 @@
                               </tr>
                             </thead>
                             <tbody *ngIf='monthData?.result.length; else elseBlock' style="width:100%">
-                              <tr *ngFor = "let item of monthData.result | filter: 'product_name': prodS">
+                              <tr *ngFor = "let item of monthData.result | filter: 'product_name': prodSY">
                                 <ng-container *ngIf="item?.quantity > 0">
         
                                     <td><B>{{item.product_name | titlecase}}</B></td>

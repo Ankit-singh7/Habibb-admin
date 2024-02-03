@@ -161,7 +161,7 @@ export class BillingComponent implements OnInit {
   // }
 
   getAllOperator = () => {
-    this.userService.getAllOperator().subscribe((res) => {
+    this.userService.getAllOperator('',100000,1).subscribe((res) => {
       if(res.data) {
         let tempArr = res.data.result.map((item) => ({
           id: item.user_id,
@@ -174,7 +174,7 @@ export class BillingComponent implements OnInit {
   }
 
   getAllEmployee = () => {
-    this.userService.getAllEmployee('status=Active').subscribe((res) => {
+    this.userService.getAllEmployee('status=Active', 100000, 1).subscribe((res) => {
       if(res.data) {
         let tempArr = res.data.result.map((item) => ({
           id: item.user_id,
