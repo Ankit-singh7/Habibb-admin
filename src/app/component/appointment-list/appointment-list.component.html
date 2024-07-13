@@ -2,7 +2,7 @@
 
       <div class="container-fluid">
         <div class="row dash-tab">
-            <div class="col-sm-5 cus-srch ">
+            <!-- <div class="col-sm-5 cus-srch ">
                 <div class="form-group">
                   BRANCH WISE
                   <select name="dev" class="form-control pl-0" id="dev" [(ngModel)]="selectedBranchId" (change)="onOptionSelect('branch',$event.target.value)">
@@ -35,12 +35,12 @@
                 <input type="date" class="form-control pl-0" id="birthday2" placeholder="To Date" [(ngModel)]="selectedEndDate" name="selectedEDate" (change)="changedDate('end',$event.target.value)">
                 
               </div>
-            </div> 
-            <div class="col-sm-3">
+            </div>  -->
+            <!-- <div class="col-sm-3">
                 <div class="form-group mt-3">
                   <button class="shortcut-btn w-100" (click)="onDateSelect()"><b>SEARCH</b></button>
                 </div>
-              </div>
+              </div> -->
               <!-- <div class="offset-md-1 col-sm-2 cus-srch">
                 <div class="form-group">
                   SELECT PER PAGE
@@ -52,31 +52,35 @@
                   </select>
                  </div>
               </div>  -->
-            
-                  
-                  <div class="col-sm-12">
+            <div class="col-sm-12">
                  <div class="table-responsive">
                   <table class="table details_table ">
                     <thead>
                       <tr>
-                        <th scope="col">Service Name<a href = 'javascript:void(0)' (click)="changeOrder('food_name')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.food_name" [class.fa-caret-up]="!sortFields.food_name"></i></a></th>
-                        <th scope="col">Head Count<a href = 'javascript:void(0)' (click)="changeOrder('quantity')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.quantity" [class.fa-caret-up]="!sortFields.quantity"></i></a></th>
+                        <th scope="col">Customer Name<a href = 'javascript:void(0)' (click)="changeOrder('customer_name')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.customer_name" [class.fa-caret-up]="!sortFields.customer_name"></i></a></th>
+                        <th scope="col">Booking Amount<a href = 'javascript:void(0)' (click)="changeOrder('booking_amount')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.booking_amount" [class.fa-caret-up]="!sortFields.booking_amount"></i></a></th>
+                        <th scope="col">Payment Mode<a href = 'javascript:void(0)' (click)="changeOrder('payment_mode')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.payment_mode" [class.fa-caret-up]="!sortFields.payment_mode"></i></a></th>
+                        <th scope="col">Purpose<a href = 'javascript:void(0)' (click)="changeOrder('purpose')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.purpose" [class.fa-caret-up]="!sortFields.purpose"></i></a></th>
+                        <th scope="col">Appointment Date<a href = 'javascript:void(0)' (click)="changeOrder('appointment_date')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.appointment_date" [class.fa-caret-up]="!sortFields.appointment_date"></i></a></th>
+                        <th scope="col">Appointment Time<a href = 'javascript:void(0)' (click)="changeOrder('appointment_time')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.appointment_time" [class.fa-caret-up]="!sortFields.appointment_time"></i></a></th>
+                        <th scope="col">Booking Date<a href = 'javascript:void(0)' (click)="changeOrder('createdOn')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.createdOn" [class.fa-caret-up]="!sortFields.createdOn"></i></a></th>
                       </tr>
                     </thead>
-                    <tbody *ngIf='reportList?.length; else elseBlock' style="width:100%">
-                      <tr *ngFor = "let item of reportList index as i;">
-                        <ng-container *ngIf="item.quantity > 0">
-
-                            <td><B>{{item.service_name | titlecase}}</B></td>
-                            <!-- <td>{{item.total_price}}</td> -->
-                            <td>{{item.quantity}}</td>
-                        </ng-container>
+                    <tbody *ngIf='appointmentList?.length; else elseBlock' style="width:100%">
+                      <tr *ngFor = "let item of appointmentList index as i;">
+                            <td><B>{{item.customer_name | titlecase}}</B></td>
+                            <td> {{item.booking_amount === 0 ? '-' : '&#x20B9; '+item.booking_amount}}</td>
+                            <td> {{item.payment_mode ? item.payment_mode : '-'}}</td>
+                            <td> {{item.purpose | titlecase}}</td>
+                            <td> {{item.appointment_date}}</td>
+                            <td> {{item.appointment_time}}</td>
+                            <td> {{item.createdOn | date:'MMM d, y'}}</td>
                       </tr>
                      </tbody>
                       <ng-template #elseBlock>
                         <tbody>
                           <tr>
-                            <td class="text-center" colspan="100%">{{response}}</td>
+                            <td class="text-center" colspan="100%">No Appointments to show.</td>
                           </tr>
                         </tbody>
                       </ng-template>

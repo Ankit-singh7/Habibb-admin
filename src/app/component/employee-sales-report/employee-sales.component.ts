@@ -117,15 +117,6 @@ export class EmployeeSalesComponent implements OnInit {
 
       });
 
-      // fromEvent(this.yourNumber.nativeElement, 'input')
-      // .pipe(map((event: Event) => (event.target as HTMLInputElement).value))
-      // .pipe(debounceTime(1000))
-      // .pipe(distinctUntilChanged())
-      // .subscribe(data => {
-      //      this.searchedNumber = data.toLowerCase()
-      //       this.getCustomerList()
-
-      // });
   }
 
 

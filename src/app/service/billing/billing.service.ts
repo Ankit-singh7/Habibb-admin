@@ -32,4 +32,8 @@ export class BillingService {
    getTotalSale(paramObj?:any): Observable<any> {
      return this.http.get(`${environment.apiURL}/bill/total?${paramObj}`)
    }
+   public getAppointmentList(paramStr?:any):Observable<any> {
+    let str = paramStr?paramStr:''
+    return this.http.get(`${environment.apiURL}/appointment?per_page=500&current_page=1&status=pending&${str}`);
+  }
 }

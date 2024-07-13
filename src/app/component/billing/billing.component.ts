@@ -31,6 +31,7 @@ export class BillingComponent implements OnInit {
   public LoadingText = 'abc';
   public sortFields = {
     total_price:true,
+    booking_amount: true,
     payment_mode:true,
     delivery_mode:true,
     customer_name:true,
