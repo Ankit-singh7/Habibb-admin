@@ -99,9 +99,7 @@ export class BillingComponent implements OnInit {
   }
 
 
-  onCustomerChange(){
-   console.log(this.searchedName)
-  }
+  onCustomerChange(){}
 
   ngAfterViewInit(): void {
     fromEvent(this.yourElement.nativeElement, 'input')
@@ -117,16 +115,6 @@ export class BillingComponent implements OnInit {
           
 
       });
-
-      // fromEvent(this.yourNumber.nativeElement, 'input')
-      // .pipe(map((event: Event) => (event.target as HTMLInputElement).value))
-      // .pipe(debounceTime(1000))
-      // .pipe(distinctUntilChanged())
-      // .subscribe(data => {
-      //      this.searchedNumber = data.toLowerCase()
-      //       this.getCustomerList()
-
-      // });
   }
 
 
@@ -146,20 +134,6 @@ export class BillingComponent implements OnInit {
       } 
     })
   }
-
-
-
-  // getAllDeliveryMode = () => {
-  //   this.modeService.getDeliveryModeList().subscribe((res) => {
-  //     if(res.data) {
-  //       this.delivery = res.data.map((item) => ({
-  //          id: item.delivery_mode_name,
-  //          name: item.delivery_mode_name
-  //       }))
-  //       this.delivery.push({id:'',name:'All'})
-  //     } 
-  //   })
-  // }
 
   getAllOperator = () => {
     this.userService.getAllOperator('',100000,1).subscribe((res) => {
@@ -206,18 +180,11 @@ export class BillingComponent implements OnInit {
 
   addStatus(val){
     this.status = val
-    console.log(this.status);
   }
 
   editStatus(val){
     this.detail.status = val
-    console.log(this.status);
   }
-
-
-
-
-
 
   getBillList(page?:number) {
     
@@ -241,7 +208,6 @@ export class BillingComponent implements OnInit {
           filterStr = `${filterStr}${item}=${data[item]}&`
         }
         }
-     console.log(filterStr)
     this.ui.loader.show()
     this.billService.getBillingList(this.selectedPerPage,this.currentpage,filterStr).subscribe((res) => {
       this.billList = [];
@@ -256,7 +222,6 @@ export class BillingComponent implements OnInit {
         if(res.data.result.length>0) {
         
           this.totalPage = (res.data.total).split('-')[1];
-          console.log(this.totalPage)
         }
       } else {
         this.total = 0;
@@ -280,7 +245,6 @@ export class BillingComponent implements OnInit {
         if(res.data.result.length>0) {
         
           this.totalPage = (res.data.total).split('-')[1];
-          console.log(this.totalPage)
         }
       } else {
         this.total = 0;
@@ -344,8 +308,6 @@ export class BillingComponent implements OnInit {
     } else if(date === 'end') {
       this.selectedEndDate = val
     }
-    console.log(this.selectedStartDate)
-    console.log(this.selectedEndDate)
   }
 
 
