@@ -1,0 +1,134 @@
+
+    <!-- Page Content  -->
+
+
+      <div class="container-fluid">
+        <div class="row dash-tab">
+          <div class="col-sm-2 cus-srch ">
+            <div class="form-group">
+              BRANCH WISE
+              <select name="dev" class="form-control pl-0" id="dev" [(ngModel)]="selectedBranchId" (change)="onOptionSelect('branch',$event.target.value)">
+                <ng-container *ngFor="let item of branchList">
+                  <option [value]="item.id">{{item.name}}</option>
+                </ng-container>
+              </select>
+             </div>
+          </div> 
+          <div class="col-sm-2 cus-srch ">
+            <div class="form-group">
+              EMPLOYEE WISE
+              <select name="cars" class="form-control pl-0" id="cars" [(ngModel)]="selectedEmployee" (change)="onOptionSelect('employee',$event.target.value)">
+                <ng-container *ngFor="let item of employeeList">
+                  <option [value]="item.id">{{item.name}}</option>
+                </ng-container>
+              </select>
+             </div>
+          </div>
+          <div class="col-sm-2 cus-srch ">
+            <div class="form-group">
+              BILL BY
+              <select name="cars" class="form-control pl-0" id="cars" [(ngModel)]="selectedOperator" (change)="onOptionSelect('operator',$event.target.value)">
+                <ng-container *ngFor="let item of operatorList">
+                  <option [value]="item.id">{{item.name}}</option>
+                </ng-container>
+              </select>
+             </div>
+          </div>
+
+          <div class="col-sm-2 cus-srch">
+            <div class="form-group">
+               SEARCH BY NAME
+              <input type="text" #yourElement class="form-control pl-0" id="birthday" placeholder="Search By Cus Name" [(ngModel)]="searchedName" name="searchName" (keyup)="onCustomerChange()">
+            </div>
+          </div>  
+            <div class="col-sm-12 col-md-3 ">
+              <div class="form-group">
+                SELECT PER PAGE
+                <select name="pay" class="form-control pl-0" id="pay" [(ngModel)]="selectedPerPage" (change)="onLimitSelect($event.target.value)">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                  <option value="10000">Show All</option>
+                </select>
+               </div>
+            </div> 
+
+       
+
+            
+                  
+                  <div class="col-sm-12">
+                 <div class="table-responsive scrollmenu">
+                  <table class="table details_table ">
+                    <thead>
+                      <tr>
+                        <th scope="col">Customer <a href = 'javascript:void(0)' (click)="changeOrder('customer_name')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.customer_name" [class.fa-caret-up]="!sortFields.customer_name"></i></a></th>
+                        <th scope="col">Total Price <a href = 'javascript:void(0)' (click)="changeOrder('total_price')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.total_price" [class.fa-caret-up]="!sortFields.total_price"></i></a></th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Bill By <a href = 'javascript:void(0)' (click)="changeOrder('user_name')" class="caret-sort"><i class="fa" [class.fa-caret-down]="sortFields.user_name" [class.fa-caret-up]="!sortFields.user_name"></i></a></th>
+                        <th scope="col">View Product Usage Detail</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf='billList?.length; else elseBlock'>
+                      <tr *ngFor = "let item of billList  |paginate: { itemsPerPage: selectedPerPage, currentPage: currentpage, totalItems: totalPage};  index as i;">
+                        <td>{{item.customer_name}}</td>
+                        <td>&#x20B9; {{item.total_price}}</td>
+                        <td>{{item.customer_phone}}</td>
+                        <td>{{item.user_name}}</td>
+                        <td>
+                          <button type="button" style="margin-left:4px" class="btn btn-success btn-sm" data-toggle="modal" data-target="#viewModal" (click)="getBillDetail(item.bill_id)"><i class="fa fa-eye"></i></button>
+                        </td>
+                      </tr>
+                     </tbody>
+                      <ng-template #elseBlock>
+                        <tbody>
+                          <tr>
+                            <td class="text-center" colspan="100%">{{response}}</td>
+                          </tr>
+                        </tbody>
+                      </ng-template>
+                  </table>
+                  <pagination-controls (pageChange)="getBillList($event)" style="text-align: center;"></pagination-controls>
+                </div>
+                </div>
+                
+          
+        </div>
+      </div>
+
+
+
+
+<!-- Edit Employee Modal -->
+    <div id="viewModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" #viewModal>
+      <div class="modal-dialog">
+        <div class="modal-content" style="padding: 2%" *ngIf="detail">
+          <div class="row">
+            <div class="col-sm-12">
+              <h5 style="text-align: center">Product Usage Detail</h5>
+            </div>
+            <ng-container *ngFor="let item of detail.services">
+              <!-- Service Detail Section -->
+              <div class="col-sm-6" style="border: 1px solid gray; padding: 5px; margin-bottom: 10px;">
+                <p>Service Name: <span style="font-weight: bold;">{{ item.service_name | titlecase }}</span></p>
+                <p>Head Count: <span style="font-weight: bold;">{{ item.quantity }}</span></p>
+                
+                <!-- Product Usage Detail Section -->
+                <div *ngIf="item.product_usage_detail?.length > 0" style="margin-top: 10px; padding-left: 10px; border-top: 1px dashed gray;">
+                  <p style="font-weight: bold;">Products Used:</p>
+                  <ul>
+                    <li *ngFor="let product of item.product_usage_detail">
+                      {{ product.name | titlecase }} - Quantity: {{ product.quantity }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        
+      </div>
+
+
+  

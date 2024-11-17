@@ -43,6 +43,10 @@ const routes: Routes = [
       loadChildren: () => import('../../../app/component/billing/billing.module').then( m => m.BillingModule)
     },
     {
+      path: 'product-usage-detail',
+      loadChildren: () => import('../../../app/component/product-usage-detail/product-usage-detail.module').then( m => m.ProductUsageDetailModule)
+    },
+    {
       path: 'employee-sales',
       loadChildren: () => import('../../../app/component/employee-sales-report/employee-sales.module').then( m => m.EmployeeSalesModule)
     },
