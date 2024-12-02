@@ -23,6 +23,10 @@ const routes: Routes = [
       loadChildren: () => import('../../../app/component/product-list/product-list.module').then( m => m.ProductListModule)
     },
     {
+      path: 'service-based-product-list',
+      loadChildren: () => import('../../../app/component/service-based-product-list/service-based-product-list.module').then( m => m.ServiceBasedProductListModule)
+    },
+    {
       path: 'service-type',
       loadChildren: () => import('../../../app/component/service-type/service-type.module').then( m => m.ServiceTypeModule)
     },

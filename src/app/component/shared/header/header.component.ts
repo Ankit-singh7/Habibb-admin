@@ -72,6 +72,9 @@ export class HeaderComponent {
          if(this.activatedRoute === '/user/product-list') {
           this.title = 'PRODUCT LIST'
          }
+         if(this.activatedRoute === '/user/service-based-product-list') {
+          this.title = 'SERVICE BASED PRODUCT LIST'
+         }
          if(this.activatedRoute === '/user/service-type') {
           this.title = 'SERVICE TYPE LIST'
          }

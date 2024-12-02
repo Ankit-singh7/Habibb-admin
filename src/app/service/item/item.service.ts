@@ -58,6 +58,28 @@ export class ItemService {
   }
 
 
+  // service-based-product-list
+
+  getServiceBasedProductList():Observable<any>{
+    return this.http.get(`${environment.apiURL}/service-based-product`);
+  }
+
+  addServiceBasedProduct(data): Observable<any> {
+    return this.http.post(`${environment.apiURL}/service-based-product`,data);
+  }
+
+  deleteServiceBasedProduct(id): Observable<any> {
+    return this.http.delete(`${environment.apiURL}/service-based-product/${id}`)
+  }
+
+  getServiceBasedProductDetail(id): Observable<any> {
+    return this.http.get(`${environment.apiURL}/service-based-product/${id}`)
+  }
+
+  editServiceBasedProduct(id,data): Observable<any> {
+    return this.http.put(`${environment.apiURL}/service-based-product/${id}`, data)
+  }
+
 
 
   // service-type
