@@ -26,6 +26,7 @@ export class ServiceBasedProductListComponent implements OnInit {
     { name: 'Milligram', value: 'mg' },
     { name: 'Milliliter', value: 'ml' },
     { name: 'Liter', value: 'L' },
+    { name: 'Pack', value: 'P'}
   ];
 
 
